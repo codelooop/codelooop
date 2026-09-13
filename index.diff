@@ -1,0 +1,751 @@
+--- /Users/abuzar/Downloads/CodeLoop/index.original.html	2026-09-12 12:32:20
++++ /Users/abuzar/Downloads/CodeLoop/index.html	2026-09-12 12:29:26
+@@ -34,15 +34,18 @@
+   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+ 
+   <!-- CSS -->
+-  <link rel="stylesheet" href="css/style.css" />
+-  <link rel="stylesheet" href="css/components.css" />
+-  <link rel="stylesheet" href="css/animations.css" />
++  <link rel="stylesheet" href="css/style.css?v=26" />
++  <link rel="stylesheet" href="css/components.css?v=26" />
++  <link rel="stylesheet" href="css/animations.css?v=26" />
+ </head>
+ 
+ <body>
+ 
+   <!-- ── Cursor Glow ── -->
+-  <div class="cursor-glow" aria-hidden="true"></div>
++  <div class="cursor-glow" aria-hidden="true"><div class="cursor-blob"></div></div>
++  
++  <!-- ── Doodle Background Container ── -->
++  <div id="doodle-container" aria-hidden="true"></div>
+ 
+   <!-- ══════════════════════════════════════════
+        NAVBAR
+@@ -51,21 +54,12 @@
+     <nav class="navbar" role="navigation" aria-label="Main navigation">
+       <div class="navbar__inner">
+ 
+-        <!-- Logo -->
++        <!-- Left: Logo -->
+         <a href="#home" class="navbar__logo" aria-label="CodeLoop — Home">
+-          <svg class="logo-icon" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+-            <defs>
+-              <linearGradient id="logoGrad" x1="0" y1="0" x2="38" y2="38" gradientUnits="userSpaceOnUse">
+-                <stop offset="0%" stop-color="#FF7A59"/>
+-                <stop offset="100%" stop-color="#FF2D9E"/>
+-              </linearGradient>
+-            </defs>
+-            <text x="2" y="30" font-size="30" font-family="Georgia,serif" fill="url(#logoGrad)" font-weight="900">∞</text>
+-          </svg>
+-          <span class="logo-text">codeloop</span>
++          <img src="assets/images/codeloop2.png" alt="CodeLoop Logo" class="logo-image" />
+         </a>
+ 
+-        <!-- Desktop Nav -->
++        <!-- Center: Nav Links in pill -->
+         <nav class="navbar__nav" aria-label="Site sections">
+           <a href="#services" class="nav-link">Services</a>
+           <a href="#portfolio" class="nav-link">Portfolio</a>
+@@ -74,13 +68,12 @@
+           <a href="#contact" class="nav-link">Contact</a>
+         </nav>
+ 
+-        <!-- Desktop CTA -->
+-        <a href="#contact" class="btn btn-primary navbar__cta" id="nav-cta-btn">
+-          <span>Let's Talk</span>
+-          <svg class="btn-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+-            <path d="M4 10h12M10 4l6 6-6 6"/>
+-          </svg>
+-        </a>
++        <!-- Right: CTA only -->
++        <div class="navbar__actions">
++          <a href="#contact" class="btn btn-primary navbar__cta" id="nav-cta-btn">
++            <span>Let's Talk</span>
++          </a>
++        </div>
+ 
+         <!-- Mobile Hamburger -->
+         <button
+@@ -123,27 +116,13 @@
+     <section id="home" class="hero" aria-labelledby="hero-heading">
+ 
+       <!-- Background elements -->
+-      <svg class="hero__bg-infinity" viewBox="0 0 600 300" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+-        <defs>
+-          <linearGradient id="infGrad" x1="0" y1="0" x2="600" y2="300" gradientUnits="userSpaceOnUse">
+-            <stop offset="0%" stop-color="#FF7A59"/>
+-            <stop offset="100%" stop-color="#FF2D9E"/>
+-          </linearGradient>
+-        </defs>
+-        <path d="M150,150 C150,83.7 204.7,30 270,30 C335.3,30 390,83.7 390,150 C390,216.3 335.3,270 270,270 C204.7,270 150,216.3 150,150 Z M450,150 C450,83.7 395.3,30 330,30 C264.7,30 210,83.7 210,150 C210,216.3 264.7,270 330,270 C395.3,270 450,216.3 450,150 Z" stroke="url(#infGrad)" stroke-width="3" fill="none"/>
+-      </svg>
++      <img src="assets/images/blob.png" alt="" class="hero__bg-infinity" aria-hidden="true" />
+       <div class="hero__blob hero__blob--1" aria-hidden="true"></div>
+       <div class="hero__blob hero__blob--2" aria-hidden="true"></div>
+ 
+       <div class="container">
+         <div class="hero__content">
+ 
+-          <!-- Badge -->
+-          <div class="hero__badge" aria-label="Available for new projects">
+-            <span class="hero__badge-dot" aria-hidden="true"></span>
+-            <span>Available for new projects</span>
+-            <span class="hero__badge-pill">Remote Worldwide</span>
+-          </div>
+ 
+           <!-- Headline — words wrapped for GSAP stagger -->
+           <h1 class="hero__title" id="hero-heading">
+@@ -159,10 +138,6 @@
+             <span class="word gradient-text">worldwide.</span>
+           </h1>
+ 
+-          <!-- Subtitle -->
+-          <p class="hero__subtitle">
+-            We design and build high-performance websites, Shopify stores, custom CRMs, and WooCommerce solutions that convert visitors into loyal customers — wherever you are in the world.
+-          </p>
+ 
+           <!-- CTAs -->
+           <div class="hero__cta-group">
+@@ -177,25 +152,6 @@
+             </a>
+           </div>
+ 
+-          <!-- Stats -->
+-          <div class="hero__stats" role="list">
+-            <div class="hero__stat-item" role="listitem">
+-              <span class="hero__stat-number" data-count="50" data-suffix="+">50+</span>
+-              <span class="hero__stat-label">Projects Delivered</span>
+-            </div>
+-            <div class="hero__stat-item" role="listitem">
+-              <span class="hero__stat-number" data-count="10" data-suffix="+">10+</span>
+-              <span class="hero__stat-label">Countries Served</span>
+-            </div>
+-            <div class="hero__stat-item" role="listitem">
+-              <span class="hero__stat-number" data-count="98" data-suffix="%">98%</span>
+-              <span class="hero__stat-label">Client Satisfaction</span>
+-            </div>
+-            <div class="hero__stat-item" role="listitem">
+-              <span class="hero__stat-number" data-count="5" data-suffix="★">5★</span>
+-              <span class="hero__stat-label">Average Rating</span>
+-            </div>
+-          </div>
+ 
+         </div>
+       </div>
+@@ -220,59 +176,40 @@
+         <span class="trust-divider" aria-hidden="true"></span>
+         <div class="trust-stat">
+           <svg class="trust-stat__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+-          <span class="trust-stat__text">Clients across <span>10+ Countries</span></span>
++          <span class="trust-stat__text"><span>10+</span> Countries Served</span>
+         </div>
+         <span class="trust-divider" aria-hidden="true"></span>
+         <div class="trust-stat">
+-          <svg class="trust-stat__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+-          <span class="trust-stat__text"><span>98%</span> Client Satisfaction Rate</span>
++          <svg class="trust-stat__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
++          <span class="trust-stat__text"><span>98%</span> Client Satisfaction</span>
+         </div>
+         <span class="trust-divider" aria-hidden="true"></span>
+         <div class="trust-stat">
+-          <svg class="trust-stat__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+-          <span class="trust-stat__text"><span>5-Star</span> Rated Agency</span>
++          <svg class="trust-stat__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
++          <span class="trust-stat__text">★ <span>5/5</span> Average Rating</span>
+         </div>
++        
++        <!-- Duplicate for infinite scroll -->
+         <span class="trust-divider" aria-hidden="true"></span>
+         <div class="trust-stat">
+-          <svg class="trust-stat__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+-          <span class="trust-stat__text">Available <span>Remote Worldwide</span></span>
+-        </div>
+-        <span class="trust-divider" aria-hidden="true"></span>
+-        <div class="trust-stat">
+-          <svg class="trust-stat__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+-          <span class="trust-stat__text">Fast Delivery <span>On Time</span></span>
+-        </div>
+-        <span class="trust-divider" aria-hidden="true"></span>
+-        <!-- Duplicate set for seamless loop -->
+-        <div class="trust-stat">
+           <svg class="trust-stat__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+           <span class="trust-stat__text"><span>50+</span> Projects Delivered</span>
+         </div>
+         <span class="trust-divider" aria-hidden="true"></span>
+         <div class="trust-stat">
+           <svg class="trust-stat__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+-          <span class="trust-stat__text">Clients across <span>10+ Countries</span></span>
++          <span class="trust-stat__text"><span>10+</span> Countries Served</span>
+         </div>
+         <span class="trust-divider" aria-hidden="true"></span>
+         <div class="trust-stat">
+-          <svg class="trust-stat__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+-          <span class="trust-stat__text"><span>98%</span> Client Satisfaction Rate</span>
++          <svg class="trust-stat__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
++          <span class="trust-stat__text"><span>98%</span> Client Satisfaction</span>
+         </div>
+         <span class="trust-divider" aria-hidden="true"></span>
+         <div class="trust-stat">
+-          <svg class="trust-stat__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+-          <span class="trust-stat__text"><span>5-Star</span> Rated Agency</span>
++          <svg class="trust-stat__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
++          <span class="trust-stat__text">★ <span>5/5</span> Average Rating</span>
+         </div>
+-        <span class="trust-divider" aria-hidden="true"></span>
+-        <div class="trust-stat">
+-          <svg class="trust-stat__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+-          <span class="trust-stat__text">Available <span>Remote Worldwide</span></span>
+-        </div>
+-        <span class="trust-divider" aria-hidden="true"></span>
+-        <div class="trust-stat">
+-          <svg class="trust-stat__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+-          <span class="trust-stat__text">Fast Delivery <span>On Time</span></span>
+-        </div>
+       </div>
+     </div>
+ 
+@@ -422,118 +359,244 @@
+         <!-- Filter Buttons -->
+         <div class="portfolio__filters" role="group" aria-label="Portfolio filters">
+           <button class="filter-btn active" data-filter="all" aria-pressed="true">All Projects</button>
+-          <button class="filter-btn" data-filter="web" aria-pressed="false">Web Dev</button>
+-          <button class="filter-btn" data-filter="shopify" aria-pressed="false">Shopify</button>
+           <button class="filter-btn" data-filter="wordpress" aria-pressed="false">WordPress</button>
+-          <button class="filter-btn" data-filter="crm" aria-pressed="false">CRM</button>
+-          <button class="filter-btn" data-filter="woocommerce" aria-pressed="false">WooCommerce</button>
++          <button class="filter-btn" data-filter="shopify" aria-pressed="false">Shopify</button>
++          <button class="filter-btn" data-filter="seo" aria-pressed="false">SEO</button>
+         </div>
+ 
+         <!-- Portfolio Grid -->
+         <div class="portfolio__grid" role="list" aria-label="Portfolio projects">
+-
+           <!-- Project 1 -->
+-          <article class="portfolio-card" data-category="shopify" role="listitem" tabindex="0" aria-label="LuxeCart — Shopify store">
++          <article class="portfolio-card" data-category="wordpress" role="listitem" tabindex="0" aria-label="Master Tiger General Transport — WordPress">
+             <div class="portfolio-thumb portfolio-thumb--1" aria-hidden="true">
+-              <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+-                <text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,122,89,0.3)" font-weight="900">∞</text>
+-              </svg>
++              <svg width="80" height="40" viewBox="0 0 80 40" fill="none"><text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,45,158,0.25)" font-weight="900">∞</text></svg>
+             </div>
+             <div class="portfolio-card__overlay">
+-              <span class="portfolio-card__tag">Shopify</span>
+-              <h3 class="portfolio-card__title">LuxeCart Fashion Store</h3>
+-              <a href="#contact" class="portfolio-card__link" tabindex="-1" aria-hidden="true">
+-                View Project
+-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+-              </a>
+-            </div>
+-          </article>
+-
++              <span class="portfolio-card__tag">WordPress</span>
++              <h3 class="portfolio-card__title">Master Tiger General Transport</h3>
++              <a href="https://mt-gt.com/" target="_blank" rel="noopener noreferrer" class="portfolio-card__link">VIEW PROJECT <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
++            </div>
++          </article>
+           <!-- Project 2 -->
+-          <article class="portfolio-card" data-category="web" role="listitem" tabindex="0" aria-label="NovaTech — Corporate website">
++          <article class="portfolio-card" data-category="wordpress" role="listitem" tabindex="0" aria-label="Capel Estates — WordPress">
+             <div class="portfolio-thumb portfolio-thumb--2" aria-hidden="true">
+-              <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+-                <text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,45,158,0.3)" font-weight="900">∞</text>
+-              </svg>
++              <svg width="80" height="40" viewBox="0 0 80 40" fill="none"><text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,45,158,0.25)" font-weight="900">∞</text></svg>
+             </div>
+             <div class="portfolio-card__overlay">
+-              <span class="portfolio-card__tag">Web Dev</span>
+-              <h3 class="portfolio-card__title">NovaTech Corporate Site</h3>
+-              <a href="#contact" class="portfolio-card__link" tabindex="-1" aria-hidden="true">
+-                View Project
+-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+-              </a>
++              <span class="portfolio-card__tag">WordPress</span>
++              <h3 class="portfolio-card__title">Capel Estates</h3>
++              <a href="https://capelestates.com/" target="_blank" rel="noopener noreferrer" class="portfolio-card__link">VIEW PROJECT <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+             </div>
+           </article>
+-
+           <!-- Project 3 -->
+-          <article class="portfolio-card" data-category="crm" role="listitem" tabindex="0" aria-label="SalesForge — Custom CRM system">
++          <article class="portfolio-card" data-category="wordpress" role="listitem" tabindex="0" aria-label="BillGreen — WordPress">
+             <div class="portfolio-thumb portfolio-thumb--3" aria-hidden="true">
+-              <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+-                <text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,122,89,0.25)" font-weight="900">∞</text>
+-              </svg>
++              <svg width="80" height="40" viewBox="0 0 80 40" fill="none"><text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,45,158,0.25)" font-weight="900">∞</text></svg>
+             </div>
+             <div class="portfolio-card__overlay">
+-              <span class="portfolio-card__tag">CRM</span>
+-              <h3 class="portfolio-card__title">SalesForge Custom CRM</h3>
+-              <a href="#contact" class="portfolio-card__link" tabindex="-1" aria-hidden="true">
+-                View Project
+-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+-              </a>
++              <span class="portfolio-card__tag">WordPress</span>
++              <h3 class="portfolio-card__title">BillGreen</h3>
++              <a href="https://billgreen.us/" target="_blank" rel="noopener noreferrer" class="portfolio-card__link">VIEW PROJECT <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+             </div>
+           </article>
+-
+           <!-- Project 4 -->
+-          <article class="portfolio-card" data-category="wordpress" role="listitem" tabindex="0" aria-label="The Daily Brew — WordPress blog">
++          <article class="portfolio-card" data-category="shopify" role="listitem" tabindex="0" aria-label="Stylfox — Shopify">
+             <div class="portfolio-thumb portfolio-thumb--4" aria-hidden="true">
+-              <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+-                <text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,45,158,0.25)" font-weight="900">∞</text>
+-              </svg>
++              <svg width="80" height="40" viewBox="0 0 80 40" fill="none"><text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,122,89,0.3)" font-weight="900">∞</text></svg>
+             </div>
+             <div class="portfolio-card__overlay">
+-              <span class="portfolio-card__tag">WordPress</span>
+-              <h3 class="portfolio-card__title">The Daily Brew Magazine</h3>
+-              <a href="#contact" class="portfolio-card__link" tabindex="-1" aria-hidden="true">
+-                View Project
+-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+-              </a>
++              <span class="portfolio-card__tag">Shopify</span>
++              <h3 class="portfolio-card__title">Stylfox</h3>
++              <a href="https://stylfox.com/" target="_blank" rel="noopener noreferrer" class="portfolio-card__link">VIEW PROJECT <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+             </div>
+           </article>
+-
+           <!-- Project 5 -->
+-          <article class="portfolio-card" data-category="woocommerce" role="listitem" tabindex="0" aria-label="OrganicBox — WooCommerce store">
++          <article class="portfolio-card" data-category="shopify" role="listitem" tabindex="0" aria-label="MyChildsRoom — Shopify">
+             <div class="portfolio-thumb portfolio-thumb--5" aria-hidden="true">
+-              <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+-                <text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,122,89,0.2)" font-weight="900">∞</text>
+-              </svg>
++              <svg width="80" height="40" viewBox="0 0 80 40" fill="none"><text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,122,89,0.3)" font-weight="900">∞</text></svg>
+             </div>
+             <div class="portfolio-card__overlay">
+-              <span class="portfolio-card__tag">WooCommerce</span>
+-              <h3 class="portfolio-card__title">OrganicBox Grocery Store</h3>
+-              <a href="#contact" class="portfolio-card__link" tabindex="-1" aria-hidden="true">
+-                View Project
+-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+-              </a>
++              <span class="portfolio-card__tag">Shopify</span>
++              <h3 class="portfolio-card__title">MyChildsRoom</h3>
++              <a href="https://mychildsroom.co.uk/" target="_blank" rel="noopener noreferrer" class="portfolio-card__link">VIEW PROJECT <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+             </div>
+           </article>
+-
+           <!-- Project 6 -->
+-          <article class="portfolio-card" data-category="web" role="listitem" tabindex="0" aria-label="ArchForm — Architecture portfolio">
++          <article class="portfolio-card" data-category="shopify" role="listitem" tabindex="0" aria-label="Mida Living — Shopify">
+             <div class="portfolio-thumb portfolio-thumb--6" aria-hidden="true">
+-              <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+-                <text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,45,158,0.2)" font-weight="900">∞</text>
+-              </svg>
++              <svg width="80" height="40" viewBox="0 0 80 40" fill="none"><text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,122,89,0.3)" font-weight="900">∞</text></svg>
+             </div>
+             <div class="portfolio-card__overlay">
+-              <span class="portfolio-card__tag">Web Dev</span>
+-              <h3 class="portfolio-card__title">ArchForm Portfolio Site</h3>
+-              <a href="#contact" class="portfolio-card__link" tabindex="-1" aria-hidden="true">
+-                View Project
+-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+-              </a>
++              <span class="portfolio-card__tag">Shopify</span>
++              <h3 class="portfolio-card__title">Mida Living</h3>
++              <a href="https://midaliving.com/" target="_blank" rel="noopener noreferrer" class="portfolio-card__link">VIEW PROJECT <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+             </div>
+           </article>
+-
++          <!-- Project 7 -->
++          <article class="portfolio-card" data-category="wordpress" role="listitem" tabindex="0" aria-label="Vapzone.ae — WordPress">
++            <div class="portfolio-thumb portfolio-thumb--1" aria-hidden="true">
++              <svg width="80" height="40" viewBox="0 0 80 40" fill="none"><text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,45,158,0.25)" font-weight="900">∞</text></svg>
++            </div>
++            <div class="portfolio-card__overlay">
++              <span class="portfolio-card__tag">WordPress</span>
++              <h3 class="portfolio-card__title">Vapzone.ae</h3>
++              <a href="https://vapzone.ae/" target="_blank" rel="noopener noreferrer" class="portfolio-card__link">VIEW PROJECT <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
++            </div>
++          </article>
++          <!-- Project 8 -->
++          <article class="portfolio-card" data-category="wordpress" role="listitem" tabindex="0" aria-label="VPDAZZLE.AE — WordPress">
++            <div class="portfolio-thumb portfolio-thumb--2" aria-hidden="true">
++              <svg width="80" height="40" viewBox="0 0 80 40" fill="none"><text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,45,158,0.25)" font-weight="900">∞</text></svg>
++            </div>
++            <div class="portfolio-card__overlay">
++              <span class="portfolio-card__tag">WordPress</span>
++              <h3 class="portfolio-card__title">VPDAZZLE.AE</h3>
++              <a href="https://vapdazzle.ae/" target="_blank" rel="noopener noreferrer" class="portfolio-card__link">VIEW PROJECT <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
++            </div>
++          </article>
++          <!-- Project 9 -->
++          <article class="portfolio-card" data-category="wordpress" role="listitem" tabindex="0" aria-label="VapDubai.ae — WordPress">
++            <div class="portfolio-thumb portfolio-thumb--3" aria-hidden="true">
++              <svg width="80" height="40" viewBox="0 0 80 40" fill="none"><text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,45,158,0.25)" font-weight="900">∞</text></svg>
++            </div>
++            <div class="portfolio-card__overlay">
++              <span class="portfolio-card__tag">WordPress</span>
++              <h3 class="portfolio-card__title">VapDubai.ae</h3>
++              <a href="https://vapdubai.ae/" target="_blank" rel="noopener noreferrer" class="portfolio-card__link">VIEW PROJECT <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
++            </div>
++          </article>
++          <!-- Project 10 -->
++          <article class="portfolio-card" data-category="wordpress" role="listitem" tabindex="0" aria-label="VapeDubaiKing — WordPress">
++            <div class="portfolio-thumb portfolio-thumb--4" aria-hidden="true">
++              <svg width="80" height="40" viewBox="0 0 80 40" fill="none"><text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,45,158,0.25)" font-weight="900">∞</text></svg>
++            </div>
++            <div class="portfolio-card__overlay">
++              <span class="portfolio-card__tag">WordPress</span>
++              <h3 class="portfolio-card__title">VapeDubaiKing</h3>
++              <a href="https://vpdubaiking.ae/" target="_blank" rel="noopener noreferrer" class="portfolio-card__link">VIEW PROJECT <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
++            </div>
++          </article>
++          <!-- Project 11 -->
++          <article class="portfolio-card" data-category="wordpress" role="listitem" tabindex="0" aria-label="Vaps.ae — WordPress">
++            <div class="portfolio-thumb portfolio-thumb--5" aria-hidden="true">
++              <svg width="80" height="40" viewBox="0 0 80 40" fill="none"><text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,45,158,0.25)" font-weight="900">∞</text></svg>
++            </div>
++            <div class="portfolio-card__overlay">
++              <span class="portfolio-card__tag">WordPress</span>
++              <h3 class="portfolio-card__title">Vaps.ae</h3>
++              <a href="https://vaps.ae/" target="_blank" rel="noopener noreferrer" class="portfolio-card__link">VIEW PROJECT <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
++            </div>
++          </article>
++          <!-- Project 12 -->
++          <article class="portfolio-card" data-category="wordpress" role="listitem" tabindex="0" aria-label="Vaporweb.ae — WordPress">
++            <div class="portfolio-thumb portfolio-thumb--6" aria-hidden="true">
++              <svg width="80" height="40" viewBox="0 0 80 40" fill="none"><text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,45,158,0.25)" font-weight="900">∞</text></svg>
++            </div>
++            <div class="portfolio-card__overlay">
++              <span class="portfolio-card__tag">WordPress</span>
++              <h3 class="portfolio-card__title">Vaporweb.ae</h3>
++              <a href="https://vaporweb.ae/" target="_blank" rel="noopener noreferrer" class="portfolio-card__link">VIEW PROJECT <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
++            </div>
++          </article>
++          <!-- Project 13 -->
++          <article class="portfolio-card" data-category="wordpress" role="listitem" tabindex="0" aria-label="VapeShopDubai.ae — WordPress">
++            <div class="portfolio-thumb portfolio-thumb--1" aria-hidden="true">
++              <svg width="80" height="40" viewBox="0 0 80 40" fill="none"><text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,45,158,0.25)" font-weight="900">∞</text></svg>
++            </div>
++            <div class="portfolio-card__overlay">
++              <span class="portfolio-card__tag">WordPress</span>
++              <h3 class="portfolio-card__title">VapeShopDubai.ae</h3>
++              <a href="https://vapshopdubai.ae/" target="_blank" rel="noopener noreferrer" class="portfolio-card__link">VIEW PROJECT <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
++            </div>
++          </article>
++          <!-- Project 14 -->
++          <article class="portfolio-card" data-category="seo" role="listitem" tabindex="0" aria-label="Drywall Takeoff Services — SEO">
++            <div class="portfolio-thumb portfolio-thumb--2" aria-hidden="true">
++              <svg width="80" height="40" viewBox="0 0 80 40" fill="none"><text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,122,89,0.3)" font-weight="900">∞</text></svg>
++            </div>
++            <div class="portfolio-card__overlay">
++              <span class="portfolio-card__tag">SEO</span>
++              <h3 class="portfolio-card__title">Drywall Takeoff Services</h3>
++              <a href="https://drywalltakeoffservices.com/" target="_blank" rel="noopener noreferrer" class="portfolio-card__link">VIEW PROJECT <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
++            </div>
++          </article>
++          <!-- Project 15 -->
++          <article class="portfolio-card" data-category="seo" role="listitem" tabindex="0" aria-label="Lumber Estimating Services — SEO">
++            <div class="portfolio-thumb portfolio-thumb--3" aria-hidden="true">
++              <svg width="80" height="40" viewBox="0 0 80 40" fill="none"><text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,122,89,0.3)" font-weight="900">∞</text></svg>
++            </div>
++            <div class="portfolio-card__overlay">
++              <span class="portfolio-card__tag">SEO</span>
++              <h3 class="portfolio-card__title">Lumber Estimating Services</h3>
++              <a href="https://lumberestimatingservices.com/" target="_blank" rel="noopener noreferrer" class="portfolio-card__link">VIEW PROJECT <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
++            </div>
++          </article>
++          <!-- Project 16 -->
++          <article class="portfolio-card" data-category="seo" role="listitem" tabindex="0" aria-label="Bids Analytics LLC — SEO">
++            <div class="portfolio-thumb portfolio-thumb--4" aria-hidden="true">
++              <svg width="80" height="40" viewBox="0 0 80 40" fill="none"><text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,122,89,0.3)" font-weight="900">∞</text></svg>
++            </div>
++            <div class="portfolio-card__overlay">
++              <span class="portfolio-card__tag">SEO</span>
++              <h3 class="portfolio-card__title">Bids Analytics LLC</h3>
++              <a href="https://bidsanalytics.com/" target="_blank" rel="noopener noreferrer" class="portfolio-card__link">VIEW PROJECT <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
++            </div>
++          </article>
++          <!-- Project 17 -->
++          <article class="portfolio-card" data-category="wordpress" role="listitem" tabindex="0" aria-label="Pure Whole Melt Home — WordPress">
++            <div class="portfolio-thumb portfolio-thumb--5" aria-hidden="true">
++              <svg width="80" height="40" viewBox="0 0 80 40" fill="none"><text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,45,158,0.25)" font-weight="900">∞</text></svg>
++            </div>
++            <div class="portfolio-card__overlay">
++              <span class="portfolio-card__tag">WordPress</span>
++              <h3 class="portfolio-card__title">Pure Whole Melt Home</h3>
++              <span class="portfolio-card__link" style="color: var(--clr-text-muted); pointer-events: none;">PRIVATE CLIENT</span>
++            </div>
++          </article>
++          <!-- Project 18 -->
++          <article class="portfolio-card" data-category="wordpress" role="listitem" tabindex="0" aria-label="Sprayed Tech Solutions — WordPress">
++            <div class="portfolio-thumb portfolio-thumb--6" aria-hidden="true">
++              <svg width="80" height="40" viewBox="0 0 80 40" fill="none"><text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,45,158,0.25)" font-weight="900">∞</text></svg>
++            </div>
++            <div class="portfolio-card__overlay">
++              <span class="portfolio-card__tag">WordPress</span>
++              <h3 class="portfolio-card__title">Sprayed Tech Solutions</h3>
++              <span class="portfolio-card__link" style="color: var(--clr-text-muted); pointer-events: none;">PRIVATE CLIENT</span>
++            </div>
++          </article>
++          <!-- Project 19 -->
++          <article class="portfolio-card" data-category="seo" role="listitem" tabindex="0" aria-label="Vape SEO — SEO">
++            <div class="portfolio-thumb portfolio-thumb--1" aria-hidden="true">
++              <svg width="80" height="40" viewBox="0 0 80 40" fill="none"><text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,122,89,0.3)" font-weight="900">∞</text></svg>
++            </div>
++            <div class="portfolio-card__overlay">
++              <span class="portfolio-card__tag">SEO</span>
++              <h3 class="portfolio-card__title">Vape SEO</h3>
++              <a href="https://vapeseo.co.uk/" target="_blank" rel="noopener noreferrer" class="portfolio-card__link">VIEW PROJECT <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
++            </div>
++          </article>
++          <!-- Project 20 -->
++          <article class="portfolio-card" data-category="seo" role="listitem" tabindex="0" aria-label="CortexZ — SEO">
++            <div class="portfolio-thumb portfolio-thumb--2" aria-hidden="true">
++              <svg width="80" height="40" viewBox="0 0 80 40" fill="none"><text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,122,89,0.3)" font-weight="900">∞</text></svg>
++            </div>
++            <div class="portfolio-card__overlay">
++              <span class="portfolio-card__tag">SEO</span>
++              <h3 class="portfolio-card__title">CortexZ</h3>
++              <a href="https://cortexz.com/" target="_blank" rel="noopener noreferrer" class="portfolio-card__link">VIEW PROJECT <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
++            </div>
++          </article>
++          <!-- Project 21 -->
++          <article class="portfolio-card" data-category="shopify" role="listitem" tabindex="0" aria-label="CloudNine Clothing — Shopify">
++            <div class="portfolio-thumb portfolio-thumb--3" aria-hidden="true">
++              <svg width="80" height="40" viewBox="0 0 80 40" fill="none"><text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,122,89,0.3)" font-weight="900">∞</text></svg>
++            </div>
++            <div class="portfolio-card__overlay">
++              <span class="portfolio-card__tag">Shopify</span>
++              <h3 class="portfolio-card__title">CloudNine Clothing</h3>
++              <a href="https://www.cloudnineclothing.ca/" target="_blank" rel="noopener noreferrer" class="portfolio-card__link">VIEW PROJECT <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
++            </div>
++          </article>
+         </div>
+       </div>
+     </section>
+@@ -562,8 +625,7 @@
+ 
+           <div class="process__step" role="listitem">
+             <div class="process__step-icon" aria-hidden="true">
+-              💬
+-              <span class="process__step-number">1</span>
++              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+             </div>
+             <h3 class="process__step-title">Inquiry</h3>
+             <p class="process__step-desc">You reach out. We listen carefully to understand your vision, goals, and timeline.</p>
+@@ -571,8 +633,7 @@
+ 
+           <div class="process__step" role="listitem">
+             <div class="process__step-icon" aria-hidden="true">
+-              📋
+-              <span class="process__step-number">2</span>
++              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+             </div>
+             <h3 class="process__step-title">Proposal</h3>
+             <p class="process__step-desc">We send a detailed proposal: scope, timeline, technology stack, and transparent pricing.</p>
+@@ -580,8 +641,7 @@
+ 
+           <div class="process__step" role="listitem">
+             <div class="process__step-icon" aria-hidden="true">
+-              🎨
+-              <span class="process__step-number">3</span>
++              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;"><circle cx="13.5" cy="5.5" r="1.5"></circle><circle cx="8.5" cy="8.5" r="1.5"></circle><circle cx="8.5" cy="15.5" r="1.5"></circle><circle cx="13.5" cy="18.5" r="1.5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"></path><path d="M22 12c0 5.5-4.5 10-10 10"></path></svg>
+             </div>
+             <h3 class="process__step-title">Design</h3>
+             <p class="process__step-desc">Our designers craft pixel-perfect wireframes and mockups, revised until you love it.</p>
+@@ -589,8 +649,7 @@
+ 
+           <div class="process__step" role="listitem">
+             <div class="process__step-icon" aria-hidden="true">
+-              ⚙️
+-              <span class="process__step-number">4</span>
++              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+             </div>
+             <h3 class="process__step-title">Build</h3>
+             <p class="process__step-desc">Development begins with clean code, regular updates, and a staging environment for your review.</p>
+@@ -598,8 +657,7 @@
+ 
+           <div class="process__step" role="listitem">
+             <div class="process__step-icon" aria-hidden="true">
+-              🚀
+-              <span class="process__step-number">5</span>
++              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;"><path d="M22 2L11 13"></path><path d="M22 2L15 22L11 13L2 9L22 2Z"></path></svg>
+             </div>
+             <h3 class="process__step-title">Launch</h3>
+             <p class="process__step-desc">We deploy to production, run final QA, and launch your project with full monitoring in place.</p>
+@@ -607,8 +665,7 @@
+ 
+           <div class="process__step" role="listitem">
+             <div class="process__step-icon" aria-hidden="true">
+-              🛡️
+-              <span class="process__step-number">6</span>
++              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+             </div>
+             <h3 class="process__step-title">Support</h3>
+             <p class="process__step-desc">Ongoing support, updates, and growth — we're your long-term technical partner, not just a vendor.</p>
+@@ -642,7 +699,7 @@
+ 
+             <!-- Floating Badge -->
+             <div class="about__badge">
+-              <div class="about__badge-icon" aria-hidden="true">🌍</div>
++              <div class="about__badge-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:32px;height:32px;"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></div>
+               <div>
+                 <div class="about__badge-text">Remote Ready</div>
+                 <div class="about__badge-label">Working across all time zones</div>
+@@ -666,7 +723,7 @@
+ 
+             <!-- Remote availability -->
+             <div class="about__remote">
+-              <span class="about__remote-icon" aria-hidden="true">🕐</span>
++              <span class="about__remote-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span>
+               <div class="about__remote-text">
+                 Available across all major time zones
+                 <span>EST · GMT · GST · AEST · PST — we sync with your schedule</span>
+@@ -715,104 +772,16 @@
+         <div class="testimonials__carousel" role="region" aria-label="Client testimonials" aria-roledescription="carousel">
+           <div class="testimonials__track" role="list">
+ 
+-            <!-- Testimonial 1 -->
+-            <div class="testimonial-card" role="listitem">
+-              <div class="testimonial-card__quote" aria-hidden="true">"</div>
+-              <div class="testimonial-card__stars" aria-label="5 stars">★★★★★</div>
+-              <p class="testimonial-card__text">
+-                "CodeLoop completely transformed our online presence. They built our Shopify store from scratch and our conversion rate increased by 340% in the first month. Absolutely exceptional work."
+-              </p>
+-              <div class="testimonial-card__author">
+-                <div class="testimonial-card__avatar" aria-hidden="true">SC</div>
+-                <div>
+-                  <div class="testimonial-card__name">Sarah Chen</div>
+-                  <div class="testimonial-card__meta">
+-                    Founder, LuxeStyle Co.
+-                    <span>·</span>
+-                    🇺🇸 USA
+-                  </div>
+-                </div>
+-              </div>
+-            </div>
+-
+-            <!-- Testimonial 2 -->
+-            <div class="testimonial-card" role="listitem">
+-              <div class="testimonial-card__quote" aria-hidden="true">"</div>
+-              <div class="testimonial-card__stars" aria-label="5 stars">★★★★★</div>
+-              <p class="testimonial-card__text">
+-                "The custom CRM they built for us replaced three different tools we were paying for. It's exactly what we needed — intuitive, fast, and built perfectly to our specs. Highly recommend."
+-              </p>
+-              <div class="testimonial-card__author">
+-                <div class="testimonial-card__avatar" aria-hidden="true">JM</div>
+-                <div>
+-                  <div class="testimonial-card__name">James Morrison</div>
+-                  <div class="testimonial-card__meta">
+-                    CEO, NovaTech Solutions
+-                    <span>·</span>
+-                    🇬🇧 UK
+-                  </div>
+-                </div>
+-              </div>
+-            </div>
+-
+-            <!-- Testimonial 3 -->
+-            <div class="testimonial-card" role="listitem">
+-              <div class="testimonial-card__quote" aria-hidden="true">"</div>
+-              <div class="testimonial-card__stars" aria-label="5 stars">★★★★★</div>
+-              <p class="testimonial-card__text">
+-                "Working with CodeLoop was seamless despite being in different time zones. They delivered our WordPress site a week early and the quality was outstanding. Will work with them again."
+-              </p>
+-              <div class="testimonial-card__author">
+-                <div class="testimonial-card__avatar" aria-hidden="true">AR</div>
+-                <div>
+-                  <div class="testimonial-card__name">Ahmed Al-Rashid</div>
+-                  <div class="testimonial-card__meta">
+-                    Director, GrowthHub Agency
+-                    <span>·</span>
+-                    🇦🇪 UAE
+-                  </div>
+-                </div>
+-              </div>
+-            </div>
+-
+-            <!-- Testimonial 4 -->
+-            <div class="testimonial-card" role="listitem">
+-              <div class="testimonial-card__quote" aria-hidden="true">"</div>
+-              <div class="testimonial-card__stars" aria-label="5 stars">★★★★★</div>
+-              <p class="testimonial-card__text">
+-                "Our WooCommerce store handles 1000+ orders daily now with zero downtime. CodeLoop's team optimized everything beautifully. Best investment we've made in our e-commerce business."
+-              </p>
+-              <div class="testimonial-card__author">
+-                <div class="testimonial-card__avatar" aria-hidden="true">LP</div>
+-                <div>
+-                  <div class="testimonial-card__name">Lisa Park</div>
+-                  <div class="testimonial-card__meta">
+-                    Owner, OrganicBox
+-                    <span>·</span>
+-                    🇦🇺 Australia
+-                  </div>
+-                </div>
+-              </div>
++            <!-- Testimonial Placeholder 1 -->
++            <div class="testimonial-card testimonial-card--empty" role="listitem" style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:260px; gap:1rem; opacity:0.5;">
++              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:0.4;" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
++              <p style="text-align:center; font-size:0.95rem; color:var(--clr-text-muted); max-width:260px;">Client reviews coming soon. We are currently collecting testimonials from our amazing clients.</p>
+             </div>
+ 
+-            <!-- Testimonial 5 -->
+-            <div class="testimonial-card" role="listitem">
+-              <div class="testimonial-card__quote" aria-hidden="true">"</div>
+-              <div class="testimonial-card__stars" aria-label="5 stars">★★★★★</div>
+-              <p class="testimonial-card__text">
+-                "Professional, communicative, and insanely talented. CodeLoop delivered our fintech web platform on time and on budget. The design is stunning and performance is top-notch."
+-              </p>
+-              <div class="testimonial-card__author">
+-                <div class="testimonial-card__avatar" aria-hidden="true">MB</div>
+-                <div>
+-                  <div class="testimonial-card__name">Marcus Bell</div>
+-                  <div class="testimonial-card__meta">
+-                    CTO, FinanceFlow
+-                    <span>·</span>
+-                    🇨🇦 Canada
+-                  </div>
+-                </div>
+-              </div>
++            <!-- Testimonial Placeholder 2 -->
++            <div class="testimonial-card testimonial-card--empty" role="listitem" style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:260px; gap:1rem; opacity:0.5;">
++              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:0.4;" aria-hidden="true"><path d="M17 8h2a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2v4l-4-4H9a1.994 1.994 0 0 1-1.414-.586m0 0L11 14h4a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2v4l.586-.586z"/></svg>
++              <p style="text-align:center; font-size:0.95rem; color:var(--clr-text-muted); max-width:260px;">Have you worked with us? We'd love to feature your feedback here. Reach out and let us know!</p>
+             </div>
+ 
+           </div>
+@@ -858,21 +827,21 @@
+ 
+             <div class="contact__info-list">
+               <a href="mailto:hello@codeloop.dev" class="contact__info-item" aria-label="Email us">
+-                <div class="contact__info-icon" aria-hidden="true">✉️</div>
++                <div class="contact__info-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></div>
+                 <div>
+                   <div class="contact__info-label">Email</div>
+                   <div class="contact__info-value">hello@codeloop.dev</div>
+                 </div>
+               </a>
+               <a href="https://wa.me/1234567890" class="contact__info-item" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp us">
+-                <div class="contact__info-icon" aria-hidden="true">💬</div>
++                <div class="contact__info-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div>
+                 <div>
+                   <div class="contact__info-label">WhatsApp</div>
+                   <div class="contact__info-value">+1 (234) 567-890</div>
+                 </div>
+               </a>
+               <a href="https://calendly.com/codeloop" class="contact__info-item" target="_blank" rel="noopener noreferrer" aria-label="Schedule a call">
+-                <div class="contact__info-icon" aria-hidden="true">📅</div>
++                <div class="contact__info-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div>
+                 <div>
+                   <div class="contact__info-label">Schedule a Call</div>
+                   <div class="contact__info-value">Book a free 30-min consultation</div>
+@@ -1123,7 +1092,7 @@
+   <script src="js/portfolio.js" defer></script>
+   <script src="js/carousel.js" defer></script>
+   <script src="js/form.js" defer></script>
+-  <script src="js/main.js" defer></script>
++  <script src="js/main.js?v=25" defer></script>
+ 
+ </body>
+ </html>

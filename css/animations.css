@@ -1,0 +1,286 @@
+/* ============================================================
+   CodeLoop — Animation States CSS
+   Initial GSAP states, CSS micro-interactions, keyframes
+   ============================================================ */
+
+/* ── GSAP Initial Hidden States ── */
+/* Elements that GSAP will animate in — hidden by default */
+.gsap-fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.gsap-fade-in {
+  opacity: 0;
+}
+
+.gsap-fade-left {
+  opacity: 0;
+  transform: translateX(-40px);
+}
+
+.gsap-fade-right {
+  opacity: 0;
+  transform: translateX(40px);
+}
+
+.gsap-scale-up {
+  opacity: 0;
+  transform: scale(0.85);
+}
+
+/* Hero character spans */
+.hero-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(60px) rotate(4deg);
+}
+
+.hero-subtitle-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  margin-right: 0.3em;
+}
+
+/* ── Animated Gradient Border ── */
+.gradient-border {
+  position: relative;
+  border-radius: var(--radius-lg);
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: var(--grad-primary);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+
+.gradient-border:hover::before { opacity: 1; }
+
+/* ── Shimmer Loading Effect ── */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.04) 50%,
+    rgba(255,255,255,0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2.5s ease-in-out infinite;
+}
+
+/* ── Floating Animation ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+.float-animation {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* ── Glow Pulse ── */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(255,122,89,0.2); }
+  50%       { box-shadow: 0 0 40px rgba(255,122,89,0.5), 0 0 80px rgba(255,45,158,0.2); }
+}
+
+.glow-pulse {
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+/* ── Counter Animation ── */
+.count-up {
+  display: inline-block;
+}
+
+/* ── Portfolio Card Hidden State ── */
+.portfolio-card.hidden {
+  display: none;
+}
+
+/* ── Process Step Animation States ── */
+.process__step {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.5s var(--ease-out),
+              transform 0.5s var(--ease-out);
+}
+
+.process__step.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Infinite Scroll Marquee ── */
+@keyframes marqueeLeft {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes marqueeRight {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+/* ── Typing Cursor ── */
+.typing-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1em;
+  background: var(--clr-coral);
+  margin-left: 4px;
+  vertical-align: middle;
+  animation: blink 1.1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ── Progress Bar ── */
+.skill-bar {
+  height: 4px;
+  background: var(--clr-border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.skill-bar__fill {
+  height: 100%;
+  background: var(--grad-primary);
+  border-radius: inherit;
+  width: 0;
+  transition: width 1.2s var(--ease-out);
+}
+
+/* ── Reveal Classes (toggled by JS) ── */
+.revealed {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ── Stagger Children (CSS fallback) ── */
+.stagger-children > * {
+  transition-delay: calc(var(--stagger-index, 0) * 0.08s);
+}
+
+/* ── Active Nav Indicator ── */
+.nav-link.active {
+  color: var(--clr-white);
+}
+
+/* ── Page Load Animation ── */
+@keyframes pageReveal {
+  from {
+    clip-path: inset(100% 0 0 0);
+    opacity: 0;
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+}
+
+.page-reveal {
+  animation: pageReveal 0.8s var(--ease-out) forwards;
+}
+
+/* ── Gradient Text Animate ── */
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animated-gradient-text {
+  background: linear-gradient(135deg, #FF7A59, #FF2D9E, #FF7A59, #FF2D9E);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 4s ease infinite;
+}
+
+/* ── Section Transition Lines ── */
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--clr-border), transparent);
+}
+
+.section-divider--gradient {
+  background: linear-gradient(to right, transparent, var(--clr-coral), var(--clr-pink), transparent);
+  opacity: 0.3;
+  height: 1px;
+}
+
+/* ── Custom Mouse Cursor ── */
+.cursor-glow {
+  position: fixed;
+  width: 50px;
+  height: 50px;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-blob {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/images/blob.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transform-origin: center center;
+}
+
+/* ── Reduced Motion Overrides ── */
+@media (prefers-reduced-motion: reduce) {
+  .gsap-fade-up,
+  .gsap-fade-in,
+  .gsap-fade-left,
+  .gsap-fade-right,
+  .gsap-scale-up {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .hero-char,
+  .hero-subtitle-word {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .process__step {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .hero__bg-infinity,
+  .hero__blob,
+  .hero__scroll-line,
+  .hero__badge-dot,
+  .footer__available-dot {
+    animation: none !important;
+  }
+
+  .trust-bar__inner {
+    animation: none !important;
+  }
+}
