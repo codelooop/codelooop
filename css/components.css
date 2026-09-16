@@ -199,11 +199,13 @@
   backdrop-filter: blur(4px);
   z-index: 998;
   opacity: 0;
+  pointer-events: none;
   transition: opacity var(--dur-base) var(--ease-out);
 }
 
 .mobile-overlay.active {
   opacity: 1;
+  pointer-events: auto;
 }
 
 .mobile-nav-link {
