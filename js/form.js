@@ -114,32 +114,39 @@
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
 
-    // ── Integration: Formspree (replace endpoint) ──
-    // To use: replace YOUR_FORM_ID with your Formspree form ID from formspree.io
-    const FORMSPREE_URL = 'https://formspree.io/f/YOUR_FORM_ID';
+    // ── Google Sheets via Apps Script ──
+    // ⚠️ PLACEHOLDER: Replace with your Google Apps Script deployment URL
+    const APPS_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_DEPLOYMENT_URL_HERE';
 
-    // ── Integration: EmailJS (alternative) ──
-    // Uncomment and configure if using EmailJS instead:
-    // emailjs.send('SERVICE_ID', 'TEMPLATE_ID', data).then(showSuccess).catch(showError);
+    const payload = {
+      fullName: data.name || '',
+      email:    data.email || '',
+      service:  data.service || '',
+      budget:   data.budget || '',
+      details:  data.message || ''
+    };
 
     try {
-      // Try Formspree submission
-      const response = await fetch(FORMSPREE_URL, {
-        method: 'POST',
-        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+      await fetch(APPS_SCRIPT_URL, {
+        method:  'POST',
+        body:    JSON.stringify(payload),
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' }
       });
-
-      if (response.ok || FORMSPREE_URL.includes('YOUR_FORM_ID')) {
-        // Show success (also works in demo mode before integration)
-        showSuccess();
-      } else {
-        throw new Error('Form submission failed');
-      }
-    } catch (err) {
-      // In demo/local mode, still show success for UX testing
       showSuccess();
-      console.info('CodeLoop: To enable real form submissions, configure Formspree or EmailJS in form.js');
+    } catch (err) {
+      console.error('CodeLoop: Form submission error —', err);
+      // Restore button so user can retry
+      submitBtn.innerHTML = originalHTML;
+      submitBtn.disabled  = false;
+      // Show a non-intrusive inline error
+      const existingErr = form.querySelector('.form-submit-error');
+      if (!existingErr) {
+        const errMsg = document.createElement('p');
+        errMsg.className = 'form-submit-error';
+        errMsg.style.cssText = 'color:#ff6b7a;font-size:0.8rem;margin-top:0.75rem;text-align:center;';
+        errMsg.textContent = 'Something went wrong. Please try again or email us directly.';
+        form.appendChild(errMsg);
+      }
     }
   });
 
