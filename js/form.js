@@ -16,7 +16,7 @@
 
   // ── Validation Rules ──
   const validators = {
-    name: {
+    fullName: {
       validate: (v) => v.trim().length >= 2,
       message: 'Please enter your full name (at least 2 characters).'
     },
@@ -28,7 +28,7 @@
       validate: (v) => v !== '' && v !== 'default',
       message: 'Please select a service type.'
     },
-    message: {
+    details: {
       validate: (v) => v.trim().length >= 20,
       message: 'Please describe your project (at least 20 characters).'
     }
@@ -112,27 +112,19 @@
 
     // Collect form data
     const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
-
-    // ── Google Sheets via Apps Script ──
-    // ⚠️ PLACEHOLDER: Replace with your Google Apps Script deployment URL
-    const APPS_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_DEPLOYMENT_URL_HERE';
-
-    const payload = {
-      fullName: data.name || '',
-      email:    data.email || '',
-      service:  data.service || '',
-      budget:   data.budget || '',
-      details:  data.message || ''
-    };
 
     try {
-      await fetch(APPS_SCRIPT_URL, {
-        method:  'POST',
-        body:    JSON.stringify(payload),
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+      const response = await fetch("https://formspree.io/f/mljddygz", {
+        method: "POST",
+        headers: { "Accept": "application/json" },
+        body: formData
       });
-      showSuccess();
+
+      if (response.ok) {
+        showSuccess();
+      } else {
+        throw new Error('Formspree returned an error');
+      }
     } catch (err) {
       console.error('CodeLoop: Form submission error —', err);
       // Restore button so user can retry
