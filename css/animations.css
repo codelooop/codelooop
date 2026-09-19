@@ -250,8 +250,12 @@
   transform-origin: center center;
 }
 
-/* ── Reduced Motion Overrides ── */
-@media (prefers-reduced-motion: reduce) {
+/* ── Reduced Motion & Mobile Fallbacks ── */
+/* SAFETY NET: On mobile, JS never runs GSAP animations so these elements
+   would stay hidden if they were in their CSS initial state.
+   We force everything visible here. JS will simply not overwrite these. */
+@media (prefers-reduced-motion: reduce), (max-width: 768px) {
+  /* CSS-class based GSAP targets */
   .gsap-fade-up,
   .gsap-fade-in,
   .gsap-fade-left,
@@ -261,25 +265,31 @@
     transform: none !important;
   }
 
+  /* JS-targeted elements (gsap.from() applied inline) */
   .hero-char,
-  .hero-subtitle-word {
+  .hero-subtitle-word,
+  .hero__badge,
+  .hero__stat-item,
+  .trust-bar,
+  .section-label,
+  .service-card,
+  .portfolio-card,
+  .tech-badge,
+  .testimonial-card,
+  .process__step,
+  .contact__inner > *,
+  .footer__inner > * {
     opacity: 1 !important;
     transform: none !important;
+    visibility: visible !important;
   }
 
-  .process__step {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-
+  /* Stop decorative animations */
   .hero__bg-infinity,
   .hero__blob,
   .hero__scroll-line,
   .hero__badge-dot,
-  .footer__available-dot {
-    animation: none !important;
-  }
-
+  .footer__available-dot,
   .trust-bar__inner {
     animation: none !important;
   }

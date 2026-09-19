@@ -6,13 +6,19 @@
 // ── Register GSAP Plugins ──
 gsap.registerPlugin(ScrollTrigger);
 
-// ── Check for Reduced Motion Preference ──
+// ── Check for Reduced Motion Preference & Mobile Viewport ──
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+// On mobile (<= 768px) we disable all scroll-triggered animations entirely.
+// GSAP's ScrollTrigger thresholds are calibrated for desktop viewport heights;
+// on mobile they often never fire, leaving elements permanently at opacity:0.
+const isMobile = window.matchMedia('(max-width: 768px)').matches;
+const shouldDisableMotion = prefersReducedMotion || isMobile;
 
 // ── Initialize Lenis Smooth Scroll ──
 let lenis;
 function initSmoothScroll() {
   if (typeof Lenis === 'undefined') return;
+  if (isMobile) return; // native scroll on mobile; Lenis can interfere with touch
 
   lenis = new Lenis({
     duration: 1.8,
@@ -34,7 +40,7 @@ function initSmoothScroll() {
 
 // ── Hero Section Animations ──
 function initHeroAnimation() {
-  if (prefersReducedMotion) {
+  if (shouldDisableMotion) {
     document.querySelectorAll('.hero-char, .hero-subtitle-word').forEach(el => {
       el.style.opacity = '1';
       el.style.transform = 'none';
@@ -136,7 +142,7 @@ function initCounters() {
 
 // ── Section Scroll Reveals ──
 function initScrollReveal() {
-  if (prefersReducedMotion) return;
+  if (shouldDisableMotion) return;
 
   // Generic fade-up elements
   gsap.utils.toArray('.gsap-fade-up').forEach((el, i) => {
@@ -242,7 +248,7 @@ function initScrollReveal() {
 
 // ── Service Cards Stagger ──
 function initServiceCards() {
-  if (prefersReducedMotion) return;
+  if (shouldDisableMotion) return;
 
   gsap.from('.service-card', {
     scrollTrigger: {
@@ -260,7 +266,7 @@ function initServiceCards() {
 
 // ── Portfolio Cards Stagger ──
 function initPortfolioCards() {
-  if (prefersReducedMotion) return;
+  if (shouldDisableMotion) return;
 
   gsap.from('.portfolio-card', {
     scrollTrigger: {
@@ -282,7 +288,7 @@ function initProcessTimeline() {
   const steps = document.querySelectorAll('.process__step');
   const fill = document.querySelector('.process__line-fill');
 
-  if (prefersReducedMotion) {
+  if (shouldDisableMotion) {
     steps.forEach(s => s.classList.add('animate'));
     if (fill) fill.style.width = '100%';
     return;
@@ -333,7 +339,7 @@ function initProcessTimeline() {
 
 // ── About Section Parallax ──
 function initAboutParallax() {
-  if (prefersReducedMotion) return;
+  if (shouldDisableMotion) return;
 
   gsap.to('.about__visual', {
     scrollTrigger: {
@@ -364,7 +370,7 @@ function initAboutParallax() {
 
 // ── Testimonials ──
 function initTestimonials() {
-  if (prefersReducedMotion) return;
+  if (shouldDisableMotion) return;
 
   gsap.from('.testimonial-card', {
     scrollTrigger: {
@@ -382,7 +388,7 @@ function initTestimonials() {
 
 // ── Contact Section ──
 function initContactSection() {
-  if (prefersReducedMotion) return;
+  if (shouldDisableMotion) return;
 
   const tl = gsap.timeline({
     scrollTrigger: {
@@ -415,7 +421,7 @@ function initContactSection() {
 
 // ── Footer ──
 function initFooter() {
-  if (prefersReducedMotion) return;
+  if (shouldDisableMotion) return;
 
   gsap.from('.footer__inner > *', {
     scrollTrigger: {
@@ -478,11 +484,11 @@ function initCursorGlow() {
 function initButtonMicroInteractions() {
   document.querySelectorAll('.btn').forEach(btn => {
     btn.addEventListener('mouseenter', () => {
-      if (prefersReducedMotion) return;
+      if (shouldDisableMotion) return;
       gsap.to(btn, { scale: 1.04, duration: 0.2, ease: 'power2.out' });
     });
     btn.addEventListener('mouseleave', () => {
-      if (prefersReducedMotion) return;
+      if (shouldDisableMotion) return;
       gsap.to(btn, { scale: 1, duration: 0.2, ease: 'power2.out' });
     });
     btn.addEventListener('mousedown', () => {
@@ -498,11 +504,11 @@ function initButtonMicroInteractions() {
 function initCardMicroInteractions() {
   document.querySelectorAll('.service-card').forEach(card => {
     card.addEventListener('mouseenter', () => {
-      if (prefersReducedMotion) return;
+      if (shouldDisableMotion) return;
       gsap.to(card, { y: -8, duration: 0.3, ease: 'power2.out' });
     });
     card.addEventListener('mouseleave', () => {
-      if (prefersReducedMotion) return;
+      if (shouldDisableMotion) return;
       gsap.to(card, { y: 0, duration: 0.3, ease: 'power2.out' });
     });
   });
@@ -510,7 +516,7 @@ function initCardMicroInteractions() {
 
 // ── Infinity Logo Pulse ──
 function initInfinityPulse() {
-  if (prefersReducedMotion) return;
+  if (shouldDisableMotion) return;
   const inf = document.querySelector('.hero__bg-infinity');
   if (!inf) return;
 
