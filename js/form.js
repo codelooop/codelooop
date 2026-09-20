@@ -110,14 +110,37 @@
     submitBtn.innerHTML = `<span>Sending…</span> <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>`;
     submitBtn.disabled = true;
 
-    // Collect form data
-    const formData = new FormData(form);
+    // Collect form data — manually read every field so budget is always included
+    const serviceEl = form.querySelector('[name="service"]');
+    const budgetEl  = document.getElementById('form-budget');
+
+    // Human-readable service labels
+    const serviceLabels = {
+      web:        'Custom Web Development',
+      shopify:    'Shopify Development',
+      wordpress:  'WordPress Development',
+      crm:        'Custom CRM / Software',
+      store:      'Custom Online Store',
+      woocommerce:'WooCommerce Development',
+      other:      'Other / Not Sure Yet'
+    };
+
+    const payload = new URLSearchParams({
+      fullName: form.querySelector('[name="fullName"]').value.trim(),
+      email:    form.querySelector('[name="email"]').value.trim(),
+      service:  serviceLabels[serviceEl?.value] || serviceEl?.value || '',
+      budget:   budgetEl?.value || 'Not specified',
+      details:  form.querySelector('[name="details"]').value.trim(),
+    });
 
     try {
       const response = await fetch("https://formspree.io/f/mljddygz", {
         method: "POST",
-        headers: { "Accept": "application/json" },
-        body: formData
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: payload.toString()
       });
 
       if (response.ok) {
