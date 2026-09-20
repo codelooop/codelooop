@@ -129,7 +129,7 @@
       fullName: form.querySelector('[name="fullName"]').value.trim(),
       email:    form.querySelector('[name="email"]').value.trim(),
       service:  serviceLabels[serviceEl?.value] || serviceEl?.value || '',
-      budget:   budgetEl?.value || 'Not specified',
+      budget:   budgetEl?.options[budgetEl?.selectedIndex]?.text || budgetEl?.value || 'Not specified',
       details:  form.querySelector('[name="details"]').value.trim(),
     });
 
