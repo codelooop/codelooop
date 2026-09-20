@@ -1,7 +1,53 @@
 // ============================================================
-// CodeLoop — Main JS (GSAP Animations)
-// Hero animation, ScrollTrigger reveals, smooth scroll
+// CodeLoop — Main JS (GSAP Animations & Preloader)
 // ============================================================
+
+// ── Preloader Logic ──
+(function initPreloader() {
+  const preloader = document.getElementById('preloader');
+  const preloaderPerc = document.getElementById('preloader-percentage');
+  const preloaderBar = document.getElementById('preloader-bar');
+
+  if (preloader && preloaderPerc && preloaderBar) {
+    let progress = 0;
+    let hasLoaded = false;
+    
+    // Lock scroll while loading
+    document.body.style.overflow = 'hidden';
+    
+    window.addEventListener('load', () => {
+      hasLoaded = true;
+    });
+
+    const interval = setInterval(() => {
+      // If window is loaded, quickly jump to 100
+      if (hasLoaded) {
+        progress += 20;
+      } else {
+        // Otherwise, simulate up to 85%
+        if (progress < 85) {
+          progress += Math.floor(Math.random() * 8) + 2;
+        }
+      }
+
+      if (progress >= 100) {
+        progress = 100;
+        clearInterval(interval);
+        preloaderPerc.textContent = `${progress}%`;
+        preloaderBar.style.width = `${progress}%`;
+        
+        // Hide preloader after a tiny pause at 100%
+        setTimeout(() => {
+          preloader.classList.add('preloader--hidden');
+          document.body.style.overflow = '';
+        }, 400);
+      } else {
+        preloaderPerc.textContent = `${progress}%`;
+        preloaderBar.style.width = `${progress}%`;
+      }
+    }, 60);
+  }
+})();
 
 // ── Register GSAP Plugins ──
 gsap.registerPlugin(ScrollTrigger);
