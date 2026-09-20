@@ -19,14 +19,19 @@
       hasLoaded = true;
     });
 
+    const startTime = Date.now();
+    const minLoadTime = 1500; // Force preloader to show for at least 1.5s so the logo animation is visible
+    
     const interval = setInterval(() => {
-      // If window is loaded, quickly jump to 100
-      if (hasLoaded) {
-        progress += 20;
+      const elapsed = Date.now() - startTime;
+      
+      // If window loaded AND minimum time has passed, jump to 100
+      if (hasLoaded && elapsed > minLoadTime) {
+        progress += 15;
       } else {
-        // Otherwise, simulate up to 85%
-        if (progress < 85) {
-          progress += Math.floor(Math.random() * 8) + 2;
+        // Otherwise, smoothly simulate up to 90% and wait there
+        if (progress < 90) {
+          progress += Math.floor(Math.random() * 5) + 1;
         }
       }
 
@@ -40,12 +45,12 @@
         setTimeout(() => {
           preloader.classList.add('preloader--hidden');
           document.body.style.overflow = '';
-        }, 400);
+        }, 300);
       } else {
         preloaderPerc.textContent = `${progress}%`;
         preloaderBar.style.width = `${progress}%`;
       }
-    }, 60);
+    }, 40);
   }
 })();
 
