@@ -994,14 +994,7 @@
 
                     <div class="form-group">
                       <label class="form-label" for="form-service" data-i18n="contact.serviceNeeded">Service Needed *</label>
-                      <select
-                        class="form-select"
-                        id="form-service"
-                        name="service"
-                        required
-                        aria-required="true"
-                        aria-describedby="form-service-error"
-                      >
+                      <select class="form-select" id="form-service" name="service" required aria-required="true" aria-describedby="form-service-error">
                         <option value="" disabled selected data-i18n="contact.selectService">Select a service…</option>
                         <option value="web" class="lang-rtl-text" data-i18n="contact.sWeb">Custom Web Development</option>
                         <option value="shopify" class="lang-rtl-text" data-i18n="contact.sShopify">Shopify Development</option>
@@ -1018,11 +1011,11 @@
                       <label class="form-label" for="form-budget" data-i18n="contact.budgetRange">Budget Range</label>
                       <select class="form-select" id="form-budget" name="budget">
                         <option value="" disabled selected data-i18n="contact.selectBudget">Select budget range…</option>
-                        <option value="1k-3k">$1,000 – $3,000</option>
-                        <option value="3k-8k">$3,000 – $8,000</option>
-                        <option value="8k-20k">$8,000 – $20,000</option>
-                        <option value="20k+" class="lang-rtl-text" data-i18n="contact.b4">$20,000+</option>
-                        <option value="unsure" class="lang-rtl-text" data-i18n="contact.bUnsure">Not sure yet</option>
+                        <option value="$1,000 – $3,000">$1,000 – $3,000</option>
+                        <option value="$3,000 – $8,000">$3,000 – $8,000</option>
+                        <option value="$8,000 – $20,000">$8,000 – $20,000</option>
+                        <option value="$20,000+" class="lang-rtl-text" data-i18n="contact.b4">$20,000+</option>
+                        <option value="Not sure yet" class="lang-rtl-text" data-i18n="contact.bUnsure">Not sure yet</option>
                       </select>
                       <p class="pricing-disclaimer" style="font-size: 0.75rem; color: var(--clr-text-muted); margin-top: 0.25rem;" data-i18n="contact.disclaimer">Final pricing depends on project scope &mdash; this is a starting guide.</p>
                       <p class="pricing-disclaimer" style="font-size: 0.75rem; color: var(--clr-text-muted); margin-top: 0.2rem;">Prices are flexible and negotiable based on your project's scope and requirements &mdash; the ranges above are just a starting point to help us understand your budget.</p>
