@@ -24,8 +24,8 @@
   var target   = 0;
   var loaded   = false;
   var startTime = performance.now();
-  // Minimum display time: exactly 4s so the counter feels intentional
-  var MIN_MS   = 4000;
+  // Minimum display time: exactly 10s as requested
+  var MIN_MS   = 10000;
 
   window.addEventListener('load', function () { loaded = true; });
 
@@ -36,21 +36,15 @@
     var elapsed  = now - startTime;
     var fraction = Math.min(elapsed / MIN_MS, 1);
 
-    if (loaded && elapsed >= MIN_MS) {
-      target = 100;
-    } else {
-      // Ramp up to ~90, hold near top until load event fires
-      target = Math.min(90, easeOut(fraction) * 93);
-    }
-
-    // Smooth lerp towards target — not linear, feels organic
-    progress += (target - progress) * 0.065;
+    // Smooth progression to 100% over the full 10 seconds
+    progress = easeOut(fraction) * 100;
 
     var display = Math.floor(progress);
     if (percEl) percEl.textContent = display + '%';
     if (barEl)  barEl.style.width  = display + '%';
 
-    if (progress >= 99.5) {
+    // Finish when the animation reaches 100% AND the page has actually loaded
+    if (progress >= 99.9 && loaded) {
       // Snap to 100
       if (percEl) percEl.textContent = '100%';
       if (barEl)  barEl.style.width  = '100%';
