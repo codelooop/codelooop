@@ -50,85 +50,10 @@
 
   <!-- CSS -->
   <link rel="stylesheet" href="css/style.css?v=39" />
-  <link rel="stylesheet" href="css/components.css?v=45" />
+  <link rel="stylesheet" href="css/components.css?v=46" />
   <link rel="stylesheet" href="css/chatbot.css?v=39" />
-  <link rel="stylesheet" href="css/animations.css?v=41" />
+  <link rel="stylesheet" href="css/animations.css?v=42" />
   <link rel="stylesheet" href="css/responsive.css?v=1" />
-
-  <!-- ── Preloader Script (inline, no defer — must run before window.load fires) ── -->
-  <script>
-    (function () {
-      // Bail out cleanly if the preloader elements don't exist
-      var preloader = document.getElementById('preloader');
-      if (!preloader) return;
-
-      // Respect prefers-reduced-motion — skip animation, hide immediately on load
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        window.addEventListener('load', function () {
-          preloader.classList.add('preloader--hidden');
-          document.body.style.overflow = '';
-        });
-        return;
-      }
-
-      // Lock scroll immediately
-      document.body.style.overflow = 'hidden';
-
-      var percEl = document.getElementById('preloader-percentage');
-      var barEl  = document.getElementById('preloader-bar');
-
-      var progress  = 0;        // 0–100
-      var target    = 0;        // target we're easing toward
-      var loaded    = false;
-      var startTime = performance.now();
-      var MIN_MS    = 2200;     // minimum screen time before we allow 100%
-
-      // Once all assets are fully loaded, unlock the final sprint to 100
-      window.addEventListener('load', function () {
-        loaded = true;
-      });
-
-      function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
-
-      function tick(now) {
-        var elapsed = now - startTime;
-        var fraction = Math.min(elapsed / MIN_MS, 1);   // 0→1 over MIN_MS
-
-        if (loaded && elapsed >= MIN_MS) {
-          // All done — rush to 100
-          target = 100;
-        } else {
-          // Simulate up to 88% while waiting
-          target = Math.min(88, easeOut(fraction) * 92);
-        }
-
-        // Lerp current progress toward target (smooth catch-up)
-        progress += (target - progress) * 0.07;
-
-        var display = Math.floor(progress);
-        if (percEl) percEl.textContent = display + '%';
-        if (barEl)  barEl.style.width  = display + '%';
-
-        if (progress >= 99.5) {
-          // Snap to 100 and trigger exit
-          if (percEl) percEl.textContent = '100%';
-          if (barEl)  barEl.style.width  = '100%';
-          setTimeout(function () {
-            preloader.classList.add('preloader--hidden');
-            // Re-enable scroll after transition finishes
-            setTimeout(function () {
-              document.body.style.overflow = '';
-            }, 750);
-          }, 250);
-          return; // stop rAF loop
-        }
-
-        requestAnimationFrame(tick);
-      }
-
-      requestAnimationFrame(tick);
-    })();
-  </script>
 </head>
 
 <body>
@@ -145,6 +70,68 @@
     </div>
   </div>
 
+  <!-- ── Preloader Script (inline, no defer — runs immediately after elements exist) ── -->
+  <script>
+    (function () {
+      var preloader = document.getElementById('preloader');
+      if (!preloader) return;
+
+      // Respect prefers-reduced-motion — hide immediately on load
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        window.addEventListener('load', function () {
+          preloader.classList.add('preloader--hidden');
+          document.body.style.overflow = '';
+        });
+        return;
+      }
+
+      // Lock scroll immediately
+      document.body.style.overflow = 'hidden';
+
+      var percEl = document.getElementById('preloader-percentage');
+      var barEl  = document.getElementById('preloader-bar');
+
+      var progress  = 0;
+      var target    = 0;
+      var loaded    = false;
+      var startTime = performance.now();
+      var MIN_MS    = 2200;
+
+      window.addEventListener('load', function () { loaded = true; });
+
+      function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+      function tick(now) {
+        var elapsed = now - startTime;
+        var fraction = Math.min(elapsed / MIN_MS, 1);
+
+        if (loaded && elapsed >= MIN_MS) {
+          target = 100;
+        } else {
+          target = Math.min(88, easeOut(fraction) * 92);
+        }
+
+        progress += (target - progress) * 0.07;
+        var display = Math.floor(progress);
+        
+        if (percEl) percEl.textContent = display + '%';
+        if (barEl)  barEl.style.width  = display + '%';
+
+        if (progress >= 99.5) {
+          if (percEl) percEl.textContent = '100%';
+          if (barEl)  barEl.style.width  = '100%';
+          
+          setTimeout(function () {
+            preloader.classList.add('preloader--hidden');
+            setTimeout(function () { document.body.style.overflow = ''; }, 750);
+          }, 250);
+          return;
+        }
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
+  </script>
 
   <!-- ── Cursor Glow ── -->
   <div class="cursor-glow" aria-hidden="true"><div class="cursor-blob"></div></div>
