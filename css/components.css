@@ -233,13 +233,13 @@
    HERO SECTION
 ══════════════════════════════════════════ */
 .hero {
-  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   position: relative;
   overflow: hidden;
   padding-top: var(--nav-height);
-  padding-bottom: 5rem;
+  padding-bottom: 8rem;
   background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,122,89,0.08) 0%, transparent 60%),
               radial-gradient(ellipse 60% 50% at 80% 80%, rgba(255,45,158,0.06) 0%, transparent 60%),
               var(--clr-bg);
@@ -294,7 +294,7 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 750px;
+  max-width: 860px;
 }
 
 .hero__badge {
@@ -348,15 +348,7 @@
   color: var(--clr-white);
 }
 
-.hero__title .word {
-  display: inline-block;
-  overflow: hidden;
-  vertical-align: top;
-}
-
-.hero__title .char {
-  display: inline-block;
-}
+/* .hero__title .word — deprecated, now using .hero__rotating-word-wrap */
 
 .hero__subtitle {
   font-size: clamp(1rem, 1.5vw, 1.125rem);

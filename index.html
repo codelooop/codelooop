@@ -213,31 +213,24 @@
       <div class="hero__blob hero__blob--2" aria-hidden="true"></div>
 
       <div class="container">
-        <div class="hero__content">
+        <div class="hero__content hero-reveal-root">
 
-
-
-          <!-- Headline — words wrapped for GSAP stagger -->
-          <h1 class="hero__title lang-rtl-text" id="hero-heading" data-i18n="hero.headline">
-            <span class="word">Custom</span>&nbsp;
-            <span class="word">web,</span>&nbsp;
-            <span class="word gradient-text">CRM</span>&nbsp;
-            <span class="word">&amp;</span>&nbsp;
-            <span class="word">store</span>&nbsp;
-            <br />
-            <span class="word">development</span>&nbsp;
-            <span class="word">for</span>&nbsp;
-            <span class="word">businesses</span>&nbsp;
-            <span class="word gradient-text">worldwide.</span>
+          <!-- Headline with cycling word rotator -->
+          <h1 class="hero__title lang-rtl-text hero-reveal" id="hero-heading">
+            We build
+            <span class="hero__rotating-word-wrap">
+              <span class="hero__rotating-word" id="hero-rotating-word">fast</span>
+            </span>
+            digital experiences
           </h1>
 
           <!-- Subtitle -->
-          <p class="hero__subtitle lang-rtl-text" data-i18n="hero.subtitle">
-            We design and build high-performance websites, Shopify stores, custom CRMs, and WooCommerce solutions that convert visitors into loyal customers &mdash; wherever you are in the world.
+          <p class="hero__subtitle lang-rtl-text hero-reveal" data-i18n="hero.subtitle">
+            Custom websites, Shopify stores, and CRMs engineered for businesses that refuse to blend in.
           </p>
 
           <!-- CTAs -->
-          <div class="hero__cta-group">
+          <div class="hero__cta-group hero-reveal">
             <a href="#portfolio" class="btn btn-primary lang-rtl-text" id="hero-portfolio-btn">
               <span data-i18n="hero.ctaPrimary">View Portfolio</span>
               <svg class="btn-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -249,13 +242,11 @@
             </a>
           </div>
 
-
         </div>
       </div>
 
       <!-- Scroll indicator -->
       <a href="#trust" class="hero__scroll-indicator" aria-label="Scroll down">
-        <span class="hero__scroll-text lang-rtl-text" data-i18n="hero.scroll">Scroll</span>
         <span class="hero__scroll-line" aria-hidden="true"></span>
       </a>
     </section>
@@ -267,22 +258,22 @@
       <div class="container">
         <div class="stats-section__grid" role="list">
 
-          <div class="stats-section__item gsap-fade-up" role="listitem">
+          <div class="stats-section__item reveal" role="listitem">
             <span class="stats-section__number gradient-text lang-rtl-text" data-count="20" data-suffix="+" data-i18n="trust.stat1Value">20+</span>
             <span class="stats-section__label lang-rtl-text" data-i18n="trust.stat1Label">Projects Delivered</span>
           </div>
 
-          <div class="stats-section__item gsap-fade-up" role="listitem">
+          <div class="stats-section__item reveal" role="listitem">
             <span class="stats-section__number gradient-text lang-rtl-text" data-count="10" data-suffix="+" data-i18n="trust.stat2Value">10+</span>
             <span class="stats-section__label lang-rtl-text" data-i18n="trust.stat2Label">Countries Served</span>
           </div>
 
-          <div class="stats-section__item gsap-fade-up" role="listitem">
+          <div class="stats-section__item reveal" role="listitem">
             <span class="stats-section__number gradient-text lang-rtl-text" data-count="98" data-suffix="%" data-i18n="trust.stat3Value">98%</span>
             <span class="stats-section__label lang-rtl-text" data-i18n="trust.stat3Label">Client Satisfaction</span>
           </div>
 
-          <div class="stats-section__item gsap-fade-up" role="listitem">
+          <div class="stats-section__item reveal" role="listitem">
             <span class="stats-section__number gradient-text lang-rtl-text" data-i18n="trust.stat4Value">5&#9733;</span>
             <span class="stats-section__label lang-rtl-text" data-i18n="trust.stat4Label">Average Rating</span>
           </div>
@@ -787,15 +778,15 @@
 
           <!-- Content -->
           <div class="about__content gsap-fade-right">
-            <span class="section-label about__label lang-rtl-text" data-i18n="about.label">Our Story</span>
-            <h2 class="about__heading lang-rtl-text" id="about-heading" data-i18n="about.heading">
+            <span class="section-label about__label lang-rtl-text reveal" data-i18n="about.label">Our Story</span>
+            <h2 class="about__heading lang-rtl-text reveal" id="about-heading" data-i18n="about.heading">
               Built by developers,<br />driven by <span class="gradient-text">results</span>
             </h2>
 
-            <p class="about__text lang-rtl-text" data-i18n="about.p1">
+            <p class="about__text lang-rtl-text reveal" data-i18n="about.p1">
               CodeLoop was founded with a clear mission: to bring enterprise-grade web and software development to businesses of every size, anywhere in the world. We're a remote-first team of passionate developers and designers who believe that great code changes businesses.
             </p>
-            <p class="about__text lang-rtl-text" data-i18n="about.p2">
+            <p class="about__text lang-rtl-text reveal" data-i18n="about.p2">
               From solo founders scaling their first Shopify store to growing companies needing a custom CRM — we've helped clients across the USA, UK, UAE, Australia, Canada, and beyond to achieve their digital goals.
             </p>
 
