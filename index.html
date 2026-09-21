@@ -43,17 +43,60 @@
   <!-- Favicon (inline SVG infinity symbol) -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23FF7A59'/><stop offset='100%25' stop-color='%23FF2D9E'/></linearGradient></defs><text y='.9em' font-size='90' fill='url(%23g)'>∞</text></svg>" />
 
-  <!-- Google Fonts -->
+  <!-- ── Preconnect to font origins early ── -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="css/style.css?v=50" />
-  <link rel="stylesheet" href="css/components.css?v=50" />
-  <link rel="stylesheet" href="css/chatbot.css?v=50" />
-  <link rel="stylesheet" href="css/animations.css?v=50" />
-  <link rel="stylesheet" href="css/responsive.css?v=50" />
+  <!-- ── Preload LCP-critical assets so browser fetches them immediately ── -->
+  <link rel="preload" href="assets/images/codeloop2.png" as="image" />
+  <link rel="preload" href="assets/images/blob.png" as="image" />
+
+  <!-- ── CRITICAL CSS — inlined to prevent FOUC on first paint ── -->
+  <style>
+    :root{--clr-bg:#1A1035;--clr-bg-dark:#110B28;--clr-coral:#FF7A59;--clr-pink:#FF2D9E;--clr-white:#FFFFFF;--clr-text-muted:#C8B6D4;--clr-border:rgba(255,255,255,0.03);--grad-primary:linear-gradient(135deg,#FF7A59 0%,#FF2D9E 100%);--grad-bg:linear-gradient(135deg,#1A1035 0%,#0E0B22 100%);--font-heading:'Syne',sans-serif;--font-body:'Inter',sans-serif;--nav-height:72px;--max-width:1440px;--radius-full:9999px}
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth;font-size:16px;-webkit-text-size-adjust:100%}
+    body{font-family:var(--font-body);background-color:var(--clr-bg);background-image:var(--grad-bg);color:var(--clr-white);overflow-x:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    /* Preloader — shows immediately, no flash */
+    .preloader{position:fixed;inset:0;z-index:9999;background:var(--clr-bg);display:flex;align-items:center;justify-content:center;transition:opacity .5s ease,visibility .5s ease}
+    .preloader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+    .preloader__content{display:flex;flex-direction:column;align-items:center;gap:1.5rem}
+    .preloader__logo{width:80px;height:auto;animation:logoPulse 2s ease-in-out infinite}
+    @keyframes logoPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.05);opacity:.85}}
+    .preloader__percentage{font-size:1.25rem;font-weight:700;background:var(--grad-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .preloader__bar-wrapper{width:200px;height:3px;background:rgba(255,255,255,.1);border-radius:var(--radius-full);overflow:hidden}
+    .preloader__bar{height:100%;background:var(--grad-primary);border-radius:var(--radius-full);width:0%;transition:width .1s linear}
+    /* Navbar skeleton prevents layout shift */
+    header{position:sticky;top:0;z-index:100;width:100%}
+    .navbar{display:flex;align-items:center;height:var(--nav-height);padding:0 1.5rem;background:rgba(26,16,53,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+    /* Prevent images from causing layout shift before loaded */
+    img{max-width:100%;height:auto}
+  </style>
+
+  <!-- ── Google Fonts — loaded non-blocking (media=print trick) ── -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
+    media="print" onload="this.media='all'" />
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" />
+  </noscript>
+
+  <!-- ── Main CSS — non-blocking progressive load ── -->
+  <link rel="stylesheet" href="css/style.css?v=51" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="css/components.css?v=51" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="css/animations.css?v=51" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="css/responsive.css?v=51" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="css/chatbot.css?v=51" media="print" onload="this.media='all'" />
+  <!-- Fallback for no-JS browsers -->
+  <noscript>
+    <link rel="stylesheet" href="css/style.css?v=51" />
+    <link rel="stylesheet" href="css/components.css?v=51" />
+    <link rel="stylesheet" href="css/animations.css?v=51" />
+    <link rel="stylesheet" href="css/responsive.css?v=51" />
+  </noscript>
+
+  <!-- Include perf script for Service Worker & lazy-loading -->
+  <script src="js/perf.js"></script>
 </head>
 
 <body>
@@ -1249,16 +1292,16 @@
   ══════════════════════════════════════════ -->
 
   <!-- App JS -->
-  <script src="js/translations.js"></script>
-  <script src="js/pricing.js"></script>
-  <script src="js/i18n.js"></script>
+  <script src="js/translations.js" defer></script>
+  <script src="js/pricing.js" defer></script>
+  <script src="js/i18n.js" defer></script>
   <script src="js/navbar.js" defer></script>
   <script src="js/portfolio.js" defer></script>
   <script src="js/carousel.js" defer></script>
   <script src="js/form.js" defer></script>
   <script src="js/chatbot.js?v=35" defer></script>
   <script src="js/feedback.js" defer></script>
-  <script src="js/main.js?v=50" defer></script>
+  <script src="js/main.js?v=51" defer></script>
   <script src="js/scroll-reveal.js" defer></script>
 </body>
 </html>

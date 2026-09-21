@@ -643,20 +643,43 @@ function initDoodles() {
 
 // ── Init All ──
 document.addEventListener('DOMContentLoaded', () => {
+  // Critical above-fold initializations
   wrapSubtitleWords();
   initSmoothScroll();
   initScrollReveal();
-  initPortfolioCards();
-  initProcessTimeline();
-  initAboutParallax();
-  initTestimonials();
-  initContactSection();
-  initFooter();
-  initCursorGlow();
-  initButtonMicroInteractions();
-  initCardMicroInteractions();
-  initInfinityPulse();
-  initAnchorScroll();
-  initDoodles();
+
+  // Defer everything else to idle time (non-blocking)
+  if (window.requestIdleCallback) {
+    window.requestIdleCallback(() => {
+      initPortfolioCards();
+      initProcessTimeline();
+      initAboutParallax();
+      initTestimonials();
+      initContactSection();
+      initFooter();
+      initCursorGlow();
+      initButtonMicroInteractions();
+      initCardMicroInteractions();
+      initInfinityPulse();
+      initAnchorScroll();
+      initDoodles();
+    }, { timeout: 2000 });
+  } else {
+    // Fallback for Safari < 17 if polyfill isn't loaded yet
+    setTimeout(() => {
+      initPortfolioCards();
+      initProcessTimeline();
+      initAboutParallax();
+      initTestimonials();
+      initContactSection();
+      initFooter();
+      initCursorGlow();
+      initButtonMicroInteractions();
+      initCardMicroInteractions();
+      initInfinityPulse();
+      initAnchorScroll();
+      initDoodles();
+    }, 100);
+  }
 });
 
