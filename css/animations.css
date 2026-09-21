@@ -293,4 +293,12 @@
   .trust-bar__inner {
     animation: none !important;
   }
+
+  /* Preloader: skip wipe animation, hide immediately */
+  .preloader {
+    transition: none !important;
+  }
+  .preloader__logo {
+    animation: none !important;
+  }
 }

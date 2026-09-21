@@ -1,58 +1,8 @@
 // ============================================================
-// CodeLoop — Main JS (GSAP Animations & Preloader)
+// CodeLoop — Main JS (GSAP Animations)
+// Hero animation, ScrollTrigger reveals, smooth scroll
+// Note: Preloader is handled by an inline <script> in <head>
 // ============================================================
-
-// ── Preloader Logic ──
-(function initPreloader() {
-  const preloader = document.getElementById('preloader');
-  const preloaderPerc = document.getElementById('preloader-percentage');
-  const preloaderBar = document.getElementById('preloader-bar');
-
-  if (preloader && preloaderPerc && preloaderBar) {
-    let progress = 0;
-    let hasLoaded = false;
-    
-    // Lock scroll while loading
-    document.body.style.overflow = 'hidden';
-    
-    window.addEventListener('load', () => {
-      hasLoaded = true;
-    });
-
-    const startTime = Date.now();
-    const minLoadTime = 3000; // Force preloader to show for at least 3.0s so the logo animation is visible
-    
-    const interval = setInterval(() => {
-      const elapsed = Date.now() - startTime;
-      
-      // If window loaded AND minimum time has passed, jump to 100
-      if (hasLoaded && elapsed > minLoadTime) {
-        progress += 15;
-      } else {
-        // Otherwise, smoothly simulate up to 90% and wait there
-        if (progress < 90) {
-          progress += Math.floor(Math.random() * 5) + 1;
-        }
-      }
-
-      if (progress >= 100) {
-        progress = 100;
-        clearInterval(interval);
-        preloaderPerc.textContent = `${progress}%`;
-        preloaderBar.style.width = `${progress}%`;
-        
-        // Hide preloader after a tiny pause at 100%
-        setTimeout(() => {
-          preloader.classList.add('preloader--hidden');
-          document.body.style.overflow = '';
-        }, 300);
-      } else {
-        preloaderPerc.textContent = `${progress}%`;
-        preloaderBar.style.width = `${progress}%`;
-      }
-    }, 40);
-  }
-})();
 
 // ── Register GSAP Plugins ──
 gsap.registerPlugin(ScrollTrigger);
@@ -201,7 +151,7 @@ function initScrollReveal() {
       scrollTrigger: {
         trigger: el,
         start: 'top 88%',
-        toggleActions: 'play reverse play reverse',
+        toggleActions: 'play none none none',
       },
       opacity: 0,
       y: 40,
@@ -216,7 +166,7 @@ function initScrollReveal() {
       scrollTrigger: {
         trigger: el,
         start: 'top 88%',
-        toggleActions: 'play reverse play reverse',
+        toggleActions: 'play none none none',
       },
       opacity: 0,
       duration: 0.5,
@@ -230,7 +180,7 @@ function initScrollReveal() {
       scrollTrigger: {
         trigger: el,
         start: 'top 88%',
-        toggleActions: 'play reverse play reverse',
+        toggleActions: 'play none none none',
       },
       opacity: 0,
       x: -40,
@@ -245,7 +195,7 @@ function initScrollReveal() {
       scrollTrigger: {
         trigger: el,
         start: 'top 88%',
-        toggleActions: 'play reverse play reverse',
+        toggleActions: 'play none none none',
       },
       opacity: 0,
       x: 40,
@@ -260,7 +210,7 @@ function initScrollReveal() {
       scrollTrigger: {
         trigger: el,
         start: 'top 88%',
-        toggleActions: 'play reverse play reverse',
+        toggleActions: 'play none none none',
       },
       opacity: 0,
       scale: 0.85,
@@ -274,7 +224,7 @@ function initScrollReveal() {
     scrollTrigger: {
       trigger: '.trust-bar',
       start: 'top 90%',
-      toggleActions: 'play reverse play reverse',
+      toggleActions: 'play none none none',
     },
     opacity: 0,
     duration: 0.5,
@@ -287,7 +237,7 @@ function initScrollReveal() {
       scrollTrigger: {
         trigger: el,
         start: 'top 88%',
-        toggleActions: 'play reverse play reverse',
+        toggleActions: 'play none none none',
       },
       opacity: 0,
       x: -20,
@@ -305,7 +255,7 @@ function initServiceCards() {
     scrollTrigger: {
       trigger: '.services__grid',
       start: 'top 80%',
-      toggleActions: 'play reverse play reverse',
+      toggleActions: 'play none none none',
     },
     opacity: 0,
     y: 50,
@@ -323,7 +273,7 @@ function initPortfolioCards() {
     scrollTrigger: {
       trigger: '.portfolio__grid',
       start: 'top 80%',
-      toggleActions: 'play reverse play reverse',
+      toggleActions: 'play none none none',
     },
     opacity: 0,
     y: 40,
@@ -352,7 +302,7 @@ function initProcessTimeline() {
     scrollTrigger: {
       trigger: '.process__timeline',
       start: 'top 85%',
-      toggleActions: 'play reverse play reverse',
+      toggleActions: 'play none none none',
     },
     opacity: 0,
     y: 30,
@@ -366,7 +316,7 @@ function initProcessTimeline() {
     scrollTrigger: {
       trigger: '.process__timeline',
       start: 'top 75%',
-      toggleActions: 'play reverse play reverse'
+      toggleActions: 'play none none none'
     }
   });
 
@@ -408,7 +358,7 @@ function initAboutParallax() {
     scrollTrigger: {
       trigger: '.about__tech-grid',
       start: 'top 85%',
-      toggleActions: 'play reverse play reverse',
+      toggleActions: 'play none none none',
     },
     opacity: 0,
     y: 20,
@@ -427,7 +377,7 @@ function initTestimonials() {
     scrollTrigger: {
       trigger: '.testimonials__carousel',
       start: 'top 80%',
-      toggleActions: 'play reverse play reverse',
+      toggleActions: 'play none none none',
     },
     opacity: 0,
     y: 40,
@@ -445,7 +395,7 @@ function initContactSection() {
     scrollTrigger: {
       trigger: '.contact',
       start: 'top 78%',
-      toggleActions: 'play reverse play reverse',
+      toggleActions: 'play none none none',
     }
   });
 
@@ -478,7 +428,7 @@ function initFooter() {
     scrollTrigger: {
       trigger: '.footer__inner',
       start: 'top 88%',
-      toggleActions: 'play reverse play reverse',
+      toggleActions: 'play none none none',
     },
     opacity: 0,
     y: 30,
