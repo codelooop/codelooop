@@ -20,7 +20,7 @@
     });
 
     const startTime = Date.now();
-    const minLoadTime = 1500; // Force preloader to show for at least 1.5s so the logo animation is visible
+    const minLoadTime = 3000; // Force preloader to show for at least 3.0s so the logo animation is visible
     
     const interval = setInterval(() => {
       const elapsed = Date.now() - startTime;
