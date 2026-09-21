@@ -2009,7 +2009,7 @@
   align-items: center;
   justify-content: center;
   /* Wipe-up exit: slides the overlay upward off screen */
-  transition: transform 0.7s cubic-bezier(0.76, 0, 0.24, 1),
+  transition: transform 0.75s cubic-bezier(0.76, 0, 0.24, 1),
               opacity 0.5s ease-out;
   will-change: transform;
 }
@@ -2053,7 +2053,7 @@
   height: 100%;
   background: var(--gradient-primary);
   border-radius: inherit;
-  transition: width 0.08s linear;
+  /* No CSS transition here — rAF updates are already smooth at 60fps */
 }
 
 .preloader__logo {
