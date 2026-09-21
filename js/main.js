@@ -645,11 +645,8 @@ function initDoodles() {
 document.addEventListener('DOMContentLoaded', () => {
   wrapSubtitleWords();
   initSmoothScroll();
-  initHeroAnimation();
   initScrollReveal();
-  initServiceCards();
   initPortfolioCards();
-  initProcessTimeline();
   initAboutParallax();
   initTestimonials();
   initContactSection();

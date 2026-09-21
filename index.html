@@ -213,33 +213,52 @@
       <div class="hero__blob hero__blob--2" aria-hidden="true"></div>
 
       <div class="container">
-        <div class="hero__content hero-reveal-root">
+        <div class="hero__split">
 
-          <!-- Headline with cycling word rotator -->
-          <h1 class="hero__title lang-rtl-text hero-reveal" id="hero-heading">
-            We build
-            <span class="hero__rotating-word-wrap">
-              <span class="hero__rotating-word" id="hero-rotating-word">fast</span>
-            </span>
-            digital experiences
-          </h1>
+          <!-- LEFT: Text content -->
+          <div class="hero__content hero-reveal-root">
 
-          <!-- Subtitle -->
-          <p class="hero__subtitle lang-rtl-text hero-reveal" data-i18n="hero.subtitle">
-            Custom websites, Shopify stores, and CRMs engineered for businesses that refuse to blend in.
-          </p>
+            <!-- Headline with cycling word rotator -->
+            <h1 class="hero__title lang-rtl-text hero-reveal" id="hero-heading">
+              We build
+              <span class="hero__rotating-word-wrap">
+                <span class="hero__rotating-word" id="hero-rotating-word">fast</span>
+              </span>
+              digital experiences
+            </h1>
 
-          <!-- CTAs -->
-          <div class="hero__cta-group hero-reveal">
-            <a href="#portfolio" class="btn btn-primary lang-rtl-text" id="hero-portfolio-btn">
-              <span data-i18n="hero.ctaPrimary">View Portfolio</span>
-              <svg class="btn-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <path d="M4 10h12M10 4l6 6-6 6"/>
-              </svg>
-            </a>
-            <a href="#contact" class="btn btn-ghost lang-rtl-text" id="hero-quote-btn">
-              <span data-i18n="hero.ctaSecondary">Get a Quote</span>
-            </a>
+            <!-- Subtitle -->
+            <p class="hero__subtitle lang-rtl-text hero-reveal" data-i18n="hero.subtitle">
+              Custom websites, Shopify stores, and CRMs engineered for businesses that refuse to blend in.
+            </p>
+
+            <!-- CTAs -->
+            <div class="hero__cta-group hero-reveal">
+              <a href="#portfolio" class="btn btn-primary lang-rtl-text" id="hero-portfolio-btn">
+                <span data-i18n="hero.ctaPrimary">View Portfolio</span>
+                <svg class="btn-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M4 10h12M10 4l6 6-6 6"/>
+                </svg>
+              </a>
+              <a href="#contact" class="btn btn-ghost lang-rtl-text" id="hero-quote-btn">
+                <span data-i18n="hero.ctaSecondary">Get a Quote</span>
+              </a>
+            </div>
+
+          </div>
+
+          <!-- RIGHT: Media placeholder -->
+          <!-- TODO: replace with real project screenshot/video -->
+          <div class="hero__media hero-reveal" aria-hidden="true">
+            <div class="hero__media-inner">
+              <div class="hero__media-glow"></div>
+              <div class="hero__media-grid">
+                <div class="hero__media-card hero__media-card--1"></div>
+                <div class="hero__media-card hero__media-card--2"></div>
+                <div class="hero__media-card hero__media-card--3"></div>
+                <div class="hero__media-card hero__media-card--4"></div>
+              </div>
+            </div>
           </div>
 
         </div>
@@ -250,6 +269,34 @@
         <span class="hero__scroll-line" aria-hidden="true"></span>
       </a>
     </section>
+
+    <!-- ══════════════════════════════════════════
+         MARQUEE DIVIDER
+    ══════════════════════════════════════════ -->
+    <div class="marquee-section" aria-hidden="true">
+      <div class="marquee-section__inner">
+        <div class="marquee-section__track">
+          <span>custom</span><span class="dot">&bull;</span>
+          <span>scalable</span><span class="dot">&bull;</span>
+          <span>fast</span><span class="dot">&bull;</span>
+          <span>reliable</span><span class="dot">&bull;</span>
+          <span>modern</span><span class="dot">&bull;</span>
+          <span>secure</span><span class="dot">&bull;</span>
+          <span>results-driven</span><span class="dot">&bull;</span>
+          <span>remote-first</span><span class="dot">&bull;</span>
+        </div>
+        <div class="marquee-section__track">
+          <span>custom</span><span class="dot">&bull;</span>
+          <span>scalable</span><span class="dot">&bull;</span>
+          <span>fast</span><span class="dot">&bull;</span>
+          <span>reliable</span><span class="dot">&bull;</span>
+          <span>modern</span><span class="dot">&bull;</span>
+          <span>secure</span><span class="dot">&bull;</span>
+          <span>results-driven</span><span class="dot">&bull;</span>
+          <span>remote-first</span><span class="dot">&bull;</span>
+        </div>
+      </div>
+    </div>
 
     <!-- ══════════════════════════════════════════
          STATS BAR
@@ -274,7 +321,7 @@
           </div>
 
           <div class="stats-section__item reveal" role="listitem">
-            <span class="stats-section__number gradient-text lang-rtl-text" data-i18n="trust.stat4Value">5&#9733;</span>
+            <span class="stats-section__number gradient-text lang-rtl-text" data-count="5" data-suffix="&#9733;" data-i18n="trust.stat4Value">5&#9733;</span>
             <span class="stats-section__label lang-rtl-text" data-i18n="trust.stat4Label">Average Rating</span>
           </div>
 
@@ -684,62 +731,59 @@
           From your first message to post-launch support, we follow a clear, collaborative process designed to deliver on time, every time.
         </p>
 
-        <!-- Timeline -->
-        <div class="process__timeline" role="list">
+        <!-- Tabs Navigation -->
+        <div class="process__tabs-nav reveal" role="tablist">
+          <button class="process__tab-btn active" role="tab" aria-selected="true" aria-controls="tab-1" data-target="tab-1" data-i18n="process.step1Title">Inquiry</button>
+          <button class="process__tab-btn" role="tab" aria-selected="false" aria-controls="tab-2" data-target="tab-2" data-i18n="process.step2Title">Proposal</button>
+          <button class="process__tab-btn" role="tab" aria-selected="false" aria-controls="tab-3" data-target="tab-3" data-i18n="process.step3Title">Design</button>
+          <button class="process__tab-btn" role="tab" aria-selected="false" aria-controls="tab-4" data-target="tab-4" data-i18n="process.step4Title">Build</button>
+          <button class="process__tab-btn" role="tab" aria-selected="false" aria-controls="tab-5" data-target="tab-5" data-i18n="process.step5Title">Launch</button>
+          <button class="process__tab-btn" role="tab" aria-selected="false" aria-controls="tab-6" data-target="tab-6" data-i18n="process.step6Title">Support</button>
+        </div>
 
-          <!-- Line track (desktop) -->
-          <div class="process__line-track" aria-hidden="true">
-            <div class="process__line-fill"></div>
-          </div>
-
-          <div class="process__step reveal" role="listitem">
+        <!-- Tabs Content -->
+        <div class="process__tabs-content reveal">
+          <div class="process__tab-pane active" id="tab-1" role="tabpanel">
             <div class="process__step-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:32px;height:32px; margin-bottom:1rem;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
             </div>
-            <h3 class="process__step-title lang-rtl-text" data-i18n="process.step1Title">Inquiry</h3>
             <p class="process__step-desc lang-rtl-text" data-i18n="process.step1Desc">You reach out. We listen carefully to understand your vision, goals, and timeline.</p>
           </div>
-
-          <div class="process__step reveal" role="listitem">
+          
+          <div class="process__tab-pane" id="tab-2" role="tabpanel">
             <div class="process__step-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:32px;height:32px; margin-bottom:1rem;"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
             </div>
-            <h3 class="process__step-title lang-rtl-text" data-i18n="process.step2Title">Proposal</h3>
             <p class="process__step-desc lang-rtl-text" data-i18n="process.step2Desc">We send a detailed proposal: scope, timeline, technology stack, and transparent pricing.</p>
           </div>
-
-          <div class="process__step reveal" role="listitem">
+          
+          <div class="process__tab-pane" id="tab-3" role="tabpanel">
             <div class="process__step-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;"><circle cx="13.5" cy="5.5" r="1.5"></circle><circle cx="8.5" cy="8.5" r="1.5"></circle><circle cx="8.5" cy="15.5" r="1.5"></circle><circle cx="13.5" cy="18.5" r="1.5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"></path><path d="M22 12c0 5.5-4.5 10-10 10"></path></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:32px;height:32px; margin-bottom:1rem;"><circle cx="13.5" cy="5.5" r="1.5"></circle><circle cx="8.5" cy="8.5" r="1.5"></circle><circle cx="8.5" cy="15.5" r="1.5"></circle><circle cx="13.5" cy="18.5" r="1.5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"></path><path d="M22 12c0 5.5-4.5 10-10 10"></path></svg>
             </div>
-            <h3 class="process__step-title lang-rtl-text" data-i18n="process.step3Title">Design</h3>
             <p class="process__step-desc lang-rtl-text" data-i18n="process.step3Desc">Our designers craft pixel-perfect wireframes and mockups, revised until you love it.</p>
           </div>
-
-          <div class="process__step reveal" role="listitem">
+          
+          <div class="process__tab-pane" id="tab-4" role="tabpanel">
             <div class="process__step-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:32px;height:32px; margin-bottom:1rem;"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
             </div>
-            <h3 class="process__step-title lang-rtl-text" data-i18n="process.step4Title">Build</h3>
             <p class="process__step-desc lang-rtl-text" data-i18n="process.step4Desc">Development begins with clean code, regular updates, and a staging environment for your review.</p>
           </div>
-
-          <div class="process__step reveal" role="listitem">
+          
+          <div class="process__tab-pane" id="tab-5" role="tabpanel">
             <div class="process__step-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;"><path d="M22 2L11 13"></path><path d="M22 2L15 22L11 13L2 9L22 2Z"></path></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:32px;height:32px; margin-bottom:1rem;"><path d="M22 2L11 13"></path><path d="M22 2L15 22L11 13L2 9L22 2Z"></path></svg>
             </div>
-            <h3 class="process__step-title lang-rtl-text" data-i18n="process.step5Title">Launch</h3>
             <p class="process__step-desc lang-rtl-text" data-i18n="process.step5Desc">We deploy to production, run final QA, and launch your project with full monitoring in place.</p>
           </div>
-
-          <div class="process__step reveal" role="listitem">
+          
+          <div class="process__tab-pane" id="tab-6" role="tabpanel">
             <div class="process__step-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:32px;height:32px; margin-bottom:1rem;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
             </div>
-            <h3 class="process__step-title lang-rtl-text" data-i18n="process.step6Title">Support</h3>
             <p class="process__step-desc lang-rtl-text" data-i18n="process.step6Desc">Ongoing support, updates, and growth — we're your long-term technical partner, not just a vendor.</p>
           </div>
-
         </div>
       </div>
     </section>
