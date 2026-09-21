@@ -1,94 +1,106 @@
+/* ============================================================
+   CodeLoop — Preloader
+   Dual-logo clip-path fill/reveal synced to a % counter.
+   Pure vanilla JS, no deps.
+   ============================================================ */
 (function () {
-  var preloader = document.getElementById('preloader');
-  if (!preloader) return;
+  'use strict';
 
-  // Reduced-motion: skip animation, reveal hero immediately
+  var preloader  = document.getElementById('preloader');
+  var logoBright = document.getElementById('preloader-logo-bright');
+  var label      = document.getElementById('preloader-label');
+
+  // If markup is missing for some reason, bail silently
+  if (!preloader || !logoBright || !label) return;
+
+  // ── Reduced-motion: skip straight to revealed logo, then fade out
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    logoBright.style.clipPath = 'inset(0 0% 0 0)';
+    label.textContent = 'loading\u2026\u00a0100%';
+    preloader.setAttribute('aria-valuenow', '100');
     window.addEventListener('load', function () {
-      preloader.classList.add('preloader--hidden');
-      setTimeout(function () {
-        preloader.style.display = 'none';
-        document.body.style.overflow = '';
-        revealHero();
-      }, 0);
-    });
-    return;
-  }
-
-  // Lock scroll during preloader
-  document.body.style.overflow = 'hidden';
-
-  var percEl   = document.getElementById('preloader-percentage');
-  var barEl    = document.getElementById('preloader-bar');
-  var progress = 0;
-  var target   = 0;
-  var loaded   = false;
-  var startTime = performance.now();
-
-  // Minimum display time: 4 seconds so users see the full animation
-  var MIN_MS = 4000;
-
-  window.addEventListener('load', function () { loaded = true; });
-
-  // Smooth ease-in-out curve — gradual start, gradual end
-  function easeInOut(t) {
-    return t < 0.5
-      ? 4 * t * t * t
-      : 1 - Math.pow(-2 * t + 2, 3) / 2;
-  }
-
-  function tick(now) {
-    var elapsed  = now - startTime;
-    var fraction = Math.min(elapsed / MIN_MS, 1);
-
-    if (loaded && elapsed >= MIN_MS) {
-      target = 100;
-    } else if (loaded) {
-      // Page loaded before MIN_MS — slowly climb to 95, then hold
-      target = Math.max(target, Math.min(95, easeInOut(fraction) * 100));
-    } else {
-      // Page still loading — ease from 0 → 85 over MIN_MS
-      target = Math.min(85, easeInOut(fraction) * 90);
-    }
-
-    // Very slow lerp — 0.018 makes it feel like a real loading bar
-    progress += (target - progress) * 0.018;
-
-    var display = Math.min(99, Math.floor(progress));
-    if (percEl) percEl.textContent = display + '%';
-    if (barEl)  barEl.style.width  = display + '%';
-
-    if (target >= 100 && progress >= 99.2) {
-      // Snap to 100
-      if (percEl) percEl.textContent = '100%';
-      if (barEl)  barEl.style.width  = '100%';
-
-      // Brief pause at 100% → wipe the preloader away
       setTimeout(function () {
         preloader.classList.add('preloader--hidden');
-
-        // After wipe-up transition completes, clean up and reveal hero
         setTimeout(function () {
           preloader.style.display = 'none';
           document.body.style.overflow = '';
           revealHero();
-        }, 800);
-      }, 350);
-      return;
-    }
-
-    requestAnimationFrame(tick);
+        }, 350);
+      }, 80);
+    });
+    return;
   }
 
-  requestAnimationFrame(tick);
+  // ── Lock scroll while preloader is active
+  document.body.style.overflow = 'hidden';
 
-  // ── Hero Reveal (called once preloader exits) ──────────────
+  // ── Animation config
+  var DURATION  = 2200; // ms — full 0→100 sweep
+  var startTime = null;
+  var rafId     = null;
+
+  // Cubic ease-out: fast at the start, decelerates into 100
+  function easeOutCubic(t) {
+    return 1 - Math.pow(1 - t, 3);
+  }
+
+  function animate(now) {
+    if (!startTime) startTime = now;
+
+    var elapsed  = now - startTime;
+    var t        = Math.min(elapsed / DURATION, 1);       // 0 → 1
+    var pct      = Math.floor(easeOutCubic(t) * 100);    // 0 → 100 (integer)
+
+    // Sync clip-path: inset(0 RIGHT% 0 0)
+    // RIGHT = 100 - pct → starts at 100% (hidden), ends at 0% (fully revealed)
+    var right = (100 - pct).toFixed(1);
+    logoBright.style.clipPath = 'inset(0 ' + right + '% 0 0)';
+
+    // Update label text
+    label.textContent = 'loading\u2026\u00a0' + pct + '%';
+
+    // Update ARIA
+    preloader.setAttribute('aria-valuenow', pct);
+
+    if (t < 1) {
+      rafId = requestAnimationFrame(animate);
+    } else {
+      // Snap to exactly 100%
+      logoBright.style.clipPath = 'inset(0 0% 0 0)';
+      label.textContent = 'loading\u2026\u00a0100%';
+      preloader.setAttribute('aria-valuenow', '100');
+
+      // Hold 150ms at 100, then slide/fade away
+      setTimeout(dismiss, 150);
+    }
+  }
+
+  function dismiss() {
+    preloader.classList.add('preloader--hidden');
+
+    // After the CSS transition finishes (0.75s), clean up
+    setTimeout(function () {
+      preloader.style.display = 'none';
+      document.body.style.overflow = '';
+      revealHero();
+    }, 800);
+  }
+
+  // ── Start animation as soon as script runs (elements already in DOM)
+  rafId = requestAnimationFrame(animate);
+
+  // ── Hero reveal: stagger-in elements that carry .hero-reveal
   function revealHero() {
-    var heroEls = document.querySelectorAll('.hero-reveal');
-    heroEls.forEach(function (el, i) {
+    var els = document.querySelectorAll('.hero-reveal');
+    els.forEach(function (el, i) {
       setTimeout(function () {
         el.classList.add('visible');
       }, i * 120);
     });
   }
+
+  // Safety: if the window unloads somehow, cancel rAF
+  window.addEventListener('pagehide', function () {
+    if (rafId) cancelAnimationFrame(rafId);
+  });
 })();
