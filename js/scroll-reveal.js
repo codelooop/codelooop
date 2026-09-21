@@ -108,42 +108,5 @@ document.addEventListener('DOMContentLoaded', function () {
     statsObserver.observe(document.querySelector('.stats-section'));
   }
 
-  // ── 4. Process Tab Switcher ────────────────────────────────
-  var tabBtns = document.querySelectorAll('.process__tab-btn');
-  var tabPanes = document.querySelectorAll('.process__tab-pane');
-  var tabInterval;
-  var isTabAutoAdvance = true;
-  var currentTabIndex = 0;
-
-  if (tabBtns.length > 0) {
-    function switchTab(index, manual) {
-      if (manual) {
-        isTabAutoAdvance = false;
-        clearInterval(tabInterval);
-      }
-      
-      tabBtns.forEach(function(btn) { btn.classList.remove('active'); });
-      tabPanes.forEach(function(pane) { pane.classList.remove('active'); });
-      
-      tabBtns[index].classList.add('active');
-      var targetId = tabBtns[index].getAttribute('data-target');
-      document.getElementById(targetId).classList.add('active');
-      currentTabIndex = index;
-    }
-
-    tabBtns.forEach(function(btn, i) {
-      btn.addEventListener('click', function() {
-        switchTab(i, true);
-      });
-    });
-
-    // Auto advance every 4 seconds
-    tabInterval = setInterval(function() {
-      if (isTabAutoAdvance) {
-        var next = (currentTabIndex + 1) % tabBtns.length;
-        switchTab(next, false);
-      }
-    }, 4000);
-  }
 
 });

@@ -2244,69 +2244,6 @@
   .marquee-section__track { animation: none; }
 }
 
-/* ── Process Tabs ── */
-.process__tabs-nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 3rem;
-}
-.process__tab-btn {
-  padding: 0.6rem 1.5rem;
-  border-radius: 100px;
-  background: transparent;
-  border: 1px solid var(--clr-border);
-  color: var(--clr-text-muted);
-  font-weight: 600;
-  font-size: var(--fs-sm);
-  transition: all 0.3s cubic-bezier(0.2, 1, 0.2, 1);
-  cursor: pointer;
-}
-.process__tab-btn:hover {
-  border-color: var(--clr-coral);
-  color: var(--clr-white);
-}
-.process__tab-btn.active {
-  background: var(--grad-primary);
-  color: var(--clr-white);
-  border-color: transparent;
-  box-shadow: 0 4px 15px rgba(255,122,89,0.3);
-}
-
-.process__tabs-content {
-  position: relative;
-  min-height: 220px;
-  display: flex;
-  justify-content: center;
-}
-.process__tab-pane {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-  transform: translateY(15px);
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 600px;
-  margin: 0 auto;
-}
-.process__tab-pane.active {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-  position: relative;
-}
-.process__step-desc {
-  font-size: var(--fs-base);
-  color: var(--clr-text-muted);
-  line-height: 1.7;
-}
 
 /* ── Service Card Expand Hover ── */
 .service-card {

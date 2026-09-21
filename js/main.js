@@ -647,6 +647,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initScrollReveal();
   initPortfolioCards();
+  initProcessTimeline();
   initAboutParallax();
   initTestimonials();
   initContactSection();
@@ -658,3 +659,4 @@ document.addEventListener('DOMContentLoaded', () => {
   initAnchorScroll();
   initDoodles();
 });
+
