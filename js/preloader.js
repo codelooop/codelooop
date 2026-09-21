@@ -24,8 +24,8 @@
   var target   = 0;
   var loaded   = false;
   var startTime = performance.now();
-  // Minimum display time: exactly 2s so the counter feels intentional
-  var MIN_MS   = 2000;
+  // Minimum display time: exactly 4s so the counter feels intentional
+  var MIN_MS   = 4000;
 
   window.addEventListener('load', function () { loaded = true; });
 
