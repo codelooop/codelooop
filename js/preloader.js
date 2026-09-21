@@ -24,13 +24,18 @@
   var target   = 0;
   var loaded   = false;
   var startTime = performance.now();
-  // Minimum display time: exactly 2s so the counter feels intentional
-  var MIN_MS   = 2000;
+
+  // Minimum display time: 4 seconds so users see the full animation
+  var MIN_MS = 4000;
 
   window.addEventListener('load', function () { loaded = true; });
 
-  // Cubic ease-out — snappy at start, decelerates into 100
-  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+  // Smooth ease-in-out curve — gradual start, gradual end
+  function easeInOut(t) {
+    return t < 0.5
+      ? 4 * t * t * t
+      : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
 
   function tick(now) {
     var elapsed  = now - startTime;
@@ -38,34 +43,37 @@
 
     if (loaded && elapsed >= MIN_MS) {
       target = 100;
+    } else if (loaded) {
+      // Page loaded before MIN_MS — slowly climb to 95, then hold
+      target = Math.max(target, Math.min(95, easeInOut(fraction) * 100));
     } else {
-      // Ramp up to ~90, hold near top until load event fires
-      target = Math.min(90, easeOut(fraction) * 93);
+      // Page still loading — ease from 0 → 85 over MIN_MS
+      target = Math.min(85, easeInOut(fraction) * 90);
     }
 
-    // Smooth lerp towards target — not linear, feels organic
-    progress += (target - progress) * 0.065;
+    // Very slow lerp — 0.018 makes it feel like a real loading bar
+    progress += (target - progress) * 0.018;
 
-    var display = Math.floor(progress);
+    var display = Math.min(99, Math.floor(progress));
     if (percEl) percEl.textContent = display + '%';
     if (barEl)  barEl.style.width  = display + '%';
 
-    if (progress >= 99.5) {
+    if (target >= 100 && progress >= 99.2) {
       // Snap to 100
       if (percEl) percEl.textContent = '100%';
       if (barEl)  barEl.style.width  = '100%';
 
-      // Brief pause → fade+slide the preloader away
+      // Brief pause at 100% → wipe the preloader away
       setTimeout(function () {
         preloader.classList.add('preloader--hidden');
 
-        // After fade completes, clean up and reveal hero
+        // After wipe-up transition completes, clean up and reveal hero
         setTimeout(function () {
           preloader.style.display = 'none';
           document.body.style.overflow = '';
           revealHero();
-        }, 650);
-      }, 200);
+        }, 800);
+      }, 350);
       return;
     }
 
