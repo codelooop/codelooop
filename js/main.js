@@ -249,39 +249,12 @@ function initScrollReveal() {
 
 // ── Service Cards Stagger ──
 function initServiceCards() {
-  if (shouldDisableMotion) return;
-
-  gsap.from('.service-card', {
-    scrollTrigger: {
-      trigger: '.services__grid',
-      start: 'top 80%',
-      toggleActions: 'play none none none',
-    },
-    opacity: 0,
-    y: 50,
-    stagger: 0.1,
-    duration: 0.4,
-    ease: 'power2.out',
-  });
+  // Now handled by vanilla JS IntersectionObserver (.reveal class)
 }
 
 // ── Portfolio Cards Stagger ──
 function initPortfolioCards() {
-  if (shouldDisableMotion) return;
-
-  gsap.from('.portfolio-card', {
-    scrollTrigger: {
-      trigger: '.portfolio__grid',
-      start: 'top 80%',
-      toggleActions: 'play none none none',
-    },
-    opacity: 0,
-    y: 40,
-    scale: 0.96,
-    stagger: 0.08,
-    duration: 0.4,
-    ease: 'power2.out',
-  });
+  // Now handled by vanilla JS IntersectionObserver (.reveal class)
 }
 
 // ── Process Timeline Animation ──
@@ -297,19 +270,7 @@ function initProcessTimeline() {
 
   if (!fill || steps.length === 0) return;
 
-  // Initial fade up of the steps
-  gsap.from(steps, {
-    scrollTrigger: {
-      trigger: '.process__timeline',
-      start: 'top 85%',
-      toggleActions: 'play none none none',
-    },
-    opacity: 0,
-    y: 30,
-    stagger: 0.1,
-    duration: 0.4,
-    ease: 'power2.out',
-  });
+  // Initial fade up of the steps is now handled by IntersectionObserver (.reveal class)
 
   // Automated timeline for connecting line and icons
   const tl = gsap.timeline({

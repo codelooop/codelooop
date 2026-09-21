@@ -70,68 +70,8 @@
     </div>
   </div>
 
-  <!-- ── Preloader Script (inline, no defer — runs immediately after elements exist) ── -->
-  <script>
-    (function () {
-      var preloader = document.getElementById('preloader');
-      if (!preloader) return;
-
-      // Respect prefers-reduced-motion — hide immediately on load
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        window.addEventListener('load', function () {
-          preloader.classList.add('preloader--hidden');
-          document.body.style.overflow = '';
-        });
-        return;
-      }
-
-      // Lock scroll immediately
-      document.body.style.overflow = 'hidden';
-
-      var percEl = document.getElementById('preloader-percentage');
-      var barEl  = document.getElementById('preloader-bar');
-
-      var progress  = 0;
-      var target    = 0;
-      var loaded    = false;
-      var startTime = performance.now();
-      var MIN_MS    = 2200;
-
-      window.addEventListener('load', function () { loaded = true; });
-
-      function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
-
-      function tick(now) {
-        var elapsed = now - startTime;
-        var fraction = Math.min(elapsed / MIN_MS, 1);
-
-        if (loaded && elapsed >= MIN_MS) {
-          target = 100;
-        } else {
-          target = Math.min(88, easeOut(fraction) * 92);
-        }
-
-        progress += (target - progress) * 0.07;
-        var display = Math.floor(progress);
-        
-        if (percEl) percEl.textContent = display + '%';
-        if (barEl)  barEl.style.width  = display + '%';
-
-        if (progress >= 99.5) {
-          if (percEl) percEl.textContent = '100%';
-          if (barEl)  barEl.style.width  = '100%';
-          
-          setTimeout(function () {
-            preloader.classList.add('preloader--hidden');
-            setTimeout(function () { document.body.style.overflow = ''; }, 750);
-          }, 250);
-          return;
-        }
-        requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-    })();
-  </script>
+  <!-- ── Preloader Script (external, no defer — runs immediately after elements exist) ── -->
+  <script src="js/preloader.js"></script>
 
   <!-- ── Cursor Glow ── -->
   <div class="cursor-glow" aria-hidden="true"><div class="cursor-blob"></div></div>
@@ -368,7 +308,7 @@
         <div class="services__grid" role="list">
 
           <!-- Service 1: Custom Web Dev -->
-          <article class="service-card" role="listitem">
+          <article class="service-card reveal" role="listitem">
             <div class="service-card__content">
               <div class="service-card__icon-wrap" aria-hidden="true">
                 <svg class="service-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -385,7 +325,7 @@
           </article>
 
           <!-- Service 2: Shopify -->
-          <article class="service-card" role="listitem">
+          <article class="service-card reveal" role="listitem">
             <div class="service-card__content">
               <div class="service-card__icon-wrap" aria-hidden="true">
                 <svg class="service-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -402,7 +342,7 @@
           </article>
 
           <!-- Service 3: WordPress -->
-          <article class="service-card" role="listitem">
+          <article class="service-card reveal" role="listitem">
             <div class="service-card__content">
               <div class="service-card__icon-wrap" aria-hidden="true">
                 <svg class="service-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -419,7 +359,7 @@
           </article>
 
           <!-- Service 4: Custom CRM -->
-          <article class="service-card" role="listitem">
+          <article class="service-card reveal" role="listitem">
             <div class="service-card__content">
               <div class="service-card__icon-wrap" aria-hidden="true">
                 <svg class="service-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -436,7 +376,7 @@
           </article>
 
           <!-- Service 5: Custom Online Stores -->
-          <article class="service-card" role="listitem">
+          <article class="service-card reveal" role="listitem">
             <div class="service-card__content">
               <div class="service-card__icon-wrap" aria-hidden="true">
                 <svg class="service-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -453,7 +393,7 @@
           </article>
 
           <!-- Service 6: WooCommerce -->
-          <article class="service-card" role="listitem">
+          <article class="service-card reveal" role="listitem">
             <div class="service-card__content">
               <div class="service-card__icon-wrap" aria-hidden="true">
                 <svg class="service-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -505,7 +445,7 @@
         <!-- Portfolio Grid -->
         <div class="portfolio__grid" role="list" aria-label="Portfolio projects">
           <!-- Project 1 -->
-          <article class="portfolio-card" data-category="wordpress" role="listitem" tabindex="0" aria-label="Master Tiger General Transport — WordPress">
+          <article class="portfolio-card reveal" data-category="wordpress" role="listitem" tabindex="0" aria-label="Master Tiger General Transport — WordPress">
             <div class="portfolio-thumb portfolio-thumb--1" aria-hidden="true">
               <img src="https://image.thum.io/get/width/800/crop/800/https://mt-gt.com" alt="" class="portfolio-card__image" loading="lazy" onerror="this.style.display='none'">
             </div>
@@ -516,7 +456,7 @@
             </div>
           </article>
           <!-- Project 2 -->
-          <article class="portfolio-card" data-category="wordpress" role="listitem" tabindex="0" aria-label="Capel Estates — WordPress">
+          <article class="portfolio-card reveal" data-category="wordpress" role="listitem" tabindex="0" aria-label="Capel Estates — WordPress">
             <div class="portfolio-thumb portfolio-thumb--2" aria-hidden="true">
               <img src="https://image.thum.io/get/width/800/crop/800/https://capelestates.com" alt="" class="portfolio-card__image" loading="lazy" onerror="this.style.display='none'">
             </div>
@@ -527,7 +467,7 @@
             </div>
           </article>
           <!-- Project 3 -->
-          <article class="portfolio-card" data-category="wordpress" role="listitem" tabindex="0" aria-label="BillGreen — WordPress">
+          <article class="portfolio-card reveal" data-category="wordpress" role="listitem" tabindex="0" aria-label="BillGreen — WordPress">
             <div class="portfolio-thumb portfolio-thumb--3" aria-hidden="true">
               <img src="https://image.thum.io/get/width/800/crop/800/https://billgreen.us" alt="" class="portfolio-card__image" loading="lazy" onerror="this.style.display='none'">
             </div>
@@ -538,7 +478,7 @@
             </div>
           </article>
           <!-- Project 4 -->
-          <article class="portfolio-card" data-category="shopify" role="listitem" tabindex="0" aria-label="Stylfox — Shopify">
+          <article class="portfolio-card reveal" data-category="shopify" role="listitem" tabindex="0" aria-label="Stylfox — Shopify">
             <div class="portfolio-thumb portfolio-thumb--4" aria-hidden="true">
               <img src="https://image.thum.io/get/width/800/crop/800/https://stylfox.com" alt="" class="portfolio-card__image" loading="lazy" onerror="this.style.display='none'">
             </div>
@@ -549,7 +489,7 @@
             </div>
           </article>
           <!-- Project 5 -->
-          <article class="portfolio-card" data-category="shopify" role="listitem" tabindex="0" aria-label="MyChildsRoom — Shopify">
+          <article class="portfolio-card reveal" data-category="shopify" role="listitem" tabindex="0" aria-label="MyChildsRoom — Shopify">
             <div class="portfolio-thumb portfolio-thumb--5" aria-hidden="true">
               <img src="https://image.thum.io/get/width/800/crop/800/https://mychildsroom.co.uk" alt="" class="portfolio-card__image" loading="lazy" onerror="this.style.display='none'">
             </div>
@@ -560,7 +500,7 @@
             </div>
           </article>
           <!-- Project 6 -->
-          <article class="portfolio-card" data-category="shopify" role="listitem" tabindex="0" aria-label="Mida Living — Shopify">
+          <article class="portfolio-card reveal" data-category="shopify" role="listitem" tabindex="0" aria-label="Mida Living — Shopify">
             <div class="portfolio-thumb portfolio-thumb--6" aria-hidden="true">
               <img src="https://image.thum.io/get/width/800/crop/800/https://midaliving.com" alt="" class="portfolio-card__image" loading="lazy" onerror="this.style.display='none'">
             </div>
@@ -571,7 +511,7 @@
             </div>
           </article>
           <!-- Project 7 -->
-          <article class="portfolio-card" data-category="wordpress" role="listitem" tabindex="0" aria-label="Vapzone.ae — WordPress">
+          <article class="portfolio-card reveal" data-category="wordpress" role="listitem" tabindex="0" aria-label="Vapzone.ae — WordPress">
             <div class="portfolio-thumb portfolio-thumb--1" aria-hidden="true">
               <img src="https://image.thum.io/get/width/800/crop/800/https://vapzone.ae" alt="" class="portfolio-card__image" loading="lazy" onerror="this.style.display='none'">
             </div>
@@ -582,7 +522,7 @@
             </div>
           </article>
           <!-- Project 8 -->
-          <article class="portfolio-card" data-category="wordpress" role="listitem" tabindex="0" aria-label="VPDAZZLE.AE — WordPress">
+          <article class="portfolio-card reveal" data-category="wordpress" role="listitem" tabindex="0" aria-label="VPDAZZLE.AE — WordPress">
             <div class="portfolio-thumb portfolio-thumb--2" aria-hidden="true">
               <img src="https://image.thum.io/get/width/800/crop/800/https://vapdazzle.ae" alt="" class="portfolio-card__image" loading="lazy" onerror="this.style.display='none'">
             </div>
@@ -593,7 +533,7 @@
             </div>
           </article>
           <!-- Project 9 -->
-          <article class="portfolio-card" data-category="wordpress" role="listitem" tabindex="0" aria-label="VapDubai.ae — WordPress">
+          <article class="portfolio-card reveal" data-category="wordpress" role="listitem" tabindex="0" aria-label="VapDubai.ae — WordPress">
             <div class="portfolio-thumb portfolio-thumb--3" aria-hidden="true">
               <img src="https://image.thum.io/get/width/800/crop/800/https://vapdubai.ae" alt="" class="portfolio-card__image" loading="lazy" onerror="this.style.display='none'">
             </div>
@@ -604,7 +544,7 @@
             </div>
           </article>
           <!-- Project 10 -->
-          <article class="portfolio-card" data-category="wordpress" role="listitem" tabindex="0" aria-label="VapeDubaiKing — WordPress">
+          <article class="portfolio-card reveal" data-category="wordpress" role="listitem" tabindex="0" aria-label="VapeDubaiKing — WordPress">
             <div class="portfolio-thumb portfolio-thumb--4" aria-hidden="true">
               <img src="https://image.thum.io/get/width/800/crop/800/https://vpdubaiking.ae" alt="" class="portfolio-card__image" loading="lazy" onerror="this.style.display='none'">
             </div>
@@ -615,7 +555,7 @@
             </div>
           </article>
           <!-- Project 11 -->
-          <article class="portfolio-card" data-category="wordpress" role="listitem" tabindex="0" aria-label="Vaps.ae — WordPress">
+          <article class="portfolio-card reveal" data-category="wordpress" role="listitem" tabindex="0" aria-label="Vaps.ae — WordPress">
             <div class="portfolio-thumb portfolio-thumb--5" aria-hidden="true">
               <img src="https://image.thum.io/get/width/800/crop/800/https://vaps.ae" alt="" class="portfolio-card__image" loading="lazy" onerror="this.style.display='none'">
             </div>
@@ -626,7 +566,7 @@
             </div>
           </article>
           <!-- Project 12 -->
-          <article class="portfolio-card" data-category="wordpress" role="listitem" tabindex="0" aria-label="Vaporweb.ae — WordPress">
+          <article class="portfolio-card reveal" data-category="wordpress" role="listitem" tabindex="0" aria-label="Vaporweb.ae — WordPress">
             <div class="portfolio-thumb portfolio-thumb--6" aria-hidden="true">
               <img src="https://image.thum.io/get/width/800/crop/800/https://vaporweb.ae" alt="" class="portfolio-card__image" loading="lazy" onerror="this.style.display='none'">
             </div>
@@ -637,7 +577,7 @@
             </div>
           </article>
           <!-- Project 13 -->
-          <article class="portfolio-card" data-category="wordpress" role="listitem" tabindex="0" aria-label="VapeShopDubai.ae — WordPress">
+          <article class="portfolio-card reveal" data-category="wordpress" role="listitem" tabindex="0" aria-label="VapeShopDubai.ae — WordPress">
             <div class="portfolio-thumb portfolio-thumb--1" aria-hidden="true">
               <img src="https://image.thum.io/get/width/800/crop/800/https://vapshopdubai.ae" alt="" class="portfolio-card__image" loading="lazy" onerror="this.style.display='none'">
             </div>
@@ -648,7 +588,7 @@
             </div>
           </article>
           <!-- Project 14 -->
-          <article class="portfolio-card" data-category="seo" role="listitem" tabindex="0" aria-label="Drywall Takeoff Services — SEO">
+          <article class="portfolio-card reveal" data-category="seo" role="listitem" tabindex="0" aria-label="Drywall Takeoff Services — SEO">
             <div class="portfolio-thumb portfolio-thumb--2" aria-hidden="true">
               <img src="https://image.thum.io/get/width/800/crop/800/https://drywalltakeoffservices.com" alt="" class="portfolio-card__image" loading="lazy" onerror="this.style.display='none'">
             </div>
@@ -659,7 +599,7 @@
             </div>
           </article>
           <!-- Project 15 -->
-          <article class="portfolio-card" data-category="seo" role="listitem" tabindex="0" aria-label="Lumber Estimating Services — SEO">
+          <article class="portfolio-card reveal" data-category="seo" role="listitem" tabindex="0" aria-label="Lumber Estimating Services — SEO">
             <div class="portfolio-thumb portfolio-thumb--3" aria-hidden="true">
               <img src="https://image.thum.io/get/width/800/crop/800/https://lumberestimatingservices.com" alt="" class="portfolio-card__image" loading="lazy" onerror="this.style.display='none'">
             </div>
@@ -670,7 +610,7 @@
             </div>
           </article>
           <!-- Project 16 -->
-          <article class="portfolio-card" data-category="seo" role="listitem" tabindex="0" aria-label="Bids Analytics LLC — SEO">
+          <article class="portfolio-card reveal" data-category="seo" role="listitem" tabindex="0" aria-label="Bids Analytics LLC — SEO">
             <div class="portfolio-thumb portfolio-thumb--4" aria-hidden="true">
               <img src="https://image.thum.io/get/width/800/crop/800/https://bidsanalytics.com" alt="" class="portfolio-card__image" loading="lazy" onerror="this.style.display='none'">
             </div>
@@ -681,7 +621,7 @@
             </div>
           </article>
           <!-- Project 17 -->
-          <article class="portfolio-card" data-category="wordpress" role="listitem" tabindex="0" aria-label="Pure Whole Melt Home — WordPress">
+          <article class="portfolio-card reveal" data-category="wordpress" role="listitem" tabindex="0" aria-label="Pure Whole Melt Home — WordPress">
             <div class="portfolio-thumb portfolio-thumb--5" aria-hidden="true">
               <svg width="80" height="40" viewBox="0 0 80 40" fill="none"><text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,45,158,0.25)" font-weight="900">∞</text></svg>
             </div>
@@ -692,7 +632,7 @@
             </div>
           </article>
           <!-- Project 18 -->
-          <article class="portfolio-card" data-category="wordpress" role="listitem" tabindex="0" aria-label="Sprayed Tech Solutions — WordPress">
+          <article class="portfolio-card reveal" data-category="wordpress" role="listitem" tabindex="0" aria-label="Sprayed Tech Solutions — WordPress">
             <div class="portfolio-thumb portfolio-thumb--6" aria-hidden="true">
               <svg width="80" height="40" viewBox="0 0 80 40" fill="none"><text x="5" y="30" font-size="28" font-family="Georgia,serif" fill="rgba(255,45,158,0.25)" font-weight="900">∞</text></svg>
             </div>
@@ -703,7 +643,7 @@
             </div>
           </article>
           <!-- Project 19 -->
-          <article class="portfolio-card" data-category="seo" role="listitem" tabindex="0" aria-label="Vape SEO — SEO">
+          <article class="portfolio-card reveal" data-category="seo" role="listitem" tabindex="0" aria-label="Vape SEO — SEO">
             <div class="portfolio-thumb portfolio-thumb--1" aria-hidden="true">
               <img src="https://image.thum.io/get/width/800/crop/800/https://vapeseo.co.uk" alt="" class="portfolio-card__image" loading="lazy" onerror="this.style.display='none'">
             </div>
@@ -714,7 +654,7 @@
             </div>
           </article>
           <!-- Project 20 -->
-          <article class="portfolio-card" data-category="seo" role="listitem" tabindex="0" aria-label="CortexZ — SEO">
+          <article class="portfolio-card reveal" data-category="seo" role="listitem" tabindex="0" aria-label="CortexZ — SEO">
             <div class="portfolio-thumb portfolio-thumb--2" aria-hidden="true">
               <img src="https://image.thum.io/get/width/800/crop/800/https://cortexz.com" alt="" class="portfolio-card__image" loading="lazy" onerror="this.style.display='none'">
             </div>
@@ -725,7 +665,7 @@
             </div>
           </article>
           <!-- Project 21 -->
-          <article class="portfolio-card" data-category="shopify" role="listitem" tabindex="0" aria-label="CloudNine Clothing — Shopify">
+          <article class="portfolio-card reveal" data-category="shopify" role="listitem" tabindex="0" aria-label="CloudNine Clothing — Shopify">
             <div class="portfolio-thumb portfolio-thumb--3" aria-hidden="true">
               <img src="https://image.thum.io/get/width/800/crop/800/https://www.cloudnineclothing.ca" alt="" class="portfolio-card__image" loading="lazy" onerror="this.style.display='none'">
             </div>
@@ -761,7 +701,7 @@
             <div class="process__line-fill"></div>
           </div>
 
-          <div class="process__step" role="listitem">
+          <div class="process__step reveal" role="listitem">
             <div class="process__step-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
             </div>
@@ -769,7 +709,7 @@
             <p class="process__step-desc lang-rtl-text" data-i18n="process.step1Desc">You reach out. We listen carefully to understand your vision, goals, and timeline.</p>
           </div>
 
-          <div class="process__step" role="listitem">
+          <div class="process__step reveal" role="listitem">
             <div class="process__step-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
             </div>
@@ -777,7 +717,7 @@
             <p class="process__step-desc lang-rtl-text" data-i18n="process.step2Desc">We send a detailed proposal: scope, timeline, technology stack, and transparent pricing.</p>
           </div>
 
-          <div class="process__step" role="listitem">
+          <div class="process__step reveal" role="listitem">
             <div class="process__step-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;"><circle cx="13.5" cy="5.5" r="1.5"></circle><circle cx="8.5" cy="8.5" r="1.5"></circle><circle cx="8.5" cy="15.5" r="1.5"></circle><circle cx="13.5" cy="18.5" r="1.5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"></path><path d="M22 12c0 5.5-4.5 10-10 10"></path></svg>
             </div>
@@ -785,7 +725,7 @@
             <p class="process__step-desc lang-rtl-text" data-i18n="process.step3Desc">Our designers craft pixel-perfect wireframes and mockups, revised until you love it.</p>
           </div>
 
-          <div class="process__step" role="listitem">
+          <div class="process__step reveal" role="listitem">
             <div class="process__step-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
             </div>
@@ -793,7 +733,7 @@
             <p class="process__step-desc lang-rtl-text" data-i18n="process.step4Desc">Development begins with clean code, regular updates, and a staging environment for your review.</p>
           </div>
 
-          <div class="process__step" role="listitem">
+          <div class="process__step reveal" role="listitem">
             <div class="process__step-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;"><path d="M22 2L11 13"></path><path d="M22 2L15 22L11 13L2 9L22 2Z"></path></svg>
             </div>
@@ -801,7 +741,7 @@
             <p class="process__step-desc lang-rtl-text" data-i18n="process.step5Desc">We deploy to production, run final QA, and launch your project with full monitoring in place.</p>
           </div>
 
-          <div class="process__step" role="listitem">
+          <div class="process__step reveal" role="listitem">
             <div class="process__step-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
             </div>
@@ -1281,5 +1221,6 @@
   <script src="js/chatbot.js?v=35" defer></script>
   <script src="js/feedback.js" defer></script>
   <script src="js/main.js?v=50" defer></script>
+  <script src="js/scroll-reveal.js" defer></script>
 </body>
 </html>

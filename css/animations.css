@@ -1,4 +1,31 @@
 /* ============================================================
+   CodeLoop — Animations CSS
+   Keyframes and utility classes for motion
+   ============================================================ */
+
+/* ── IntersectionObserver Reveal Classes ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s cubic-bezier(0.2, 1, 0.2, 1), transform 0.6s cubic-bezier(0.2, 1, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Preloader CSS Fade ── */
+.preloader {
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.preloader.preloader--hidden {
+  opacity: 0;
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+
    CodeLoop — Animation States CSS
    Initial GSAP states, CSS micro-interactions, keyframes
    ============================================================ */
