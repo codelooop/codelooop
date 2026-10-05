@@ -2338,12 +2338,14 @@
 .hero__br--desktop { display: block; }
 @media (max-width: 600px) { .hero__br--desktop { display: none; } }
 
-/* ── Gradient highlight badge on "future-proof" */
+/* ── Gradient highlight badge on rotating word ── */
 .hero__highlight {
   display: inline-block;
-  background: var(--grad-primary);
-  color: var(--clr-white);
-  -webkit-text-fill-color: var(--clr-white);
+  background: var(--grad-primary) !important;
+  color: var(--clr-white) !important;
+  -webkit-text-fill-color: var(--clr-white) !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
   padding: 0.05em 0.35em 0.1em;
   border-radius: var(--radius-md);
   /* Subtle vertical offset so it sits like a stamp */
