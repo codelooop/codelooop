@@ -2338,19 +2338,45 @@
 .hero__br--desktop { display: block; }
 @media (max-width: 600px) { .hero__br--desktop { display: none; } }
 
-/* ── Gradient highlight badge on rotating word ── */
+/* ── Animated gradient highlight badge on rotating word ── */
 .hero__highlight {
   display: inline-block;
-  background: var(--grad-primary) !important;
   color: var(--clr-white) !important;
   -webkit-text-fill-color: var(--clr-white) !important;
   -webkit-background-clip: initial !important;
   background-clip: initial !important;
+  background: transparent !important;
   padding: 0.05em 0.35em 0.1em;
-  border-radius: var(--radius-md);
   /* Subtle vertical offset so it sits like a stamp */
   position: relative;
   top: -0.04em;
+  z-index: 1;
+}
+
+/* The gradient background that wipes in */
+.hero__highlight::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  background: var(--grad-primary);
+  border-radius: var(--radius-md);
+  z-index: -1;
+  transition: width 0.8s cubic-bezier(0.2, 1, 0.2, 1);
+}
+
+/* Expand the background to 100% when the word is active or exiting */
+.hero__highlight.active::before,
+.hero__highlight.exit::before {
+  width: 100%;
+}
+
+/* Snap back to 0% instantly when entering */
+.hero__highlight.enter::before {
+  transition: none;
+  width: 0%;
 }
 
 /* ── Subtitle */
