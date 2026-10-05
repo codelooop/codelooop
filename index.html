@@ -116,6 +116,31 @@
     .navbar{display:flex;align-items:center;height:var(--nav-height);padding:0 1.5rem;background:rgba(26,16,53,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
     /* Prevent images from causing layout shift before loaded */
     img{max-width:100%;height:auto}
+    /* ── CRITICAL VISIBILITY SAFETY-NET ──────────────────────────────────
+       Elements that GSAP / IntersectionObserver animate start at opacity:0.
+       On mobile or slow connections the async CSS (animations.css) may load
+       AFTER the page is painted, leaving content permanently invisible.
+       This inline block ensures they always show, even if JS/CSS fails.
+    ─────────────────────────────────────────────────────────────────── */
+    @media (max-width:768px){
+      .gsap-fade-up,.gsap-fade-in,.gsap-fade-left,.gsap-fade-right,.gsap-scale-up,
+      .hero-reveal,.hero-char,.hero-subtitle-word,.hero__badge,.hero__stat-item,
+      .trust-bar,.section-label,.service-card,.portfolio-card,.tech-badge,
+      .testimonial-card,.process__step,.contact__inner>*,.footer__inner>*,
+      .reveal{
+        opacity:1!important;transform:none!important;visibility:visible!important
+      }
+    }
+    /* Reduced-motion: always show content instantly */
+    @media (prefers-reduced-motion:reduce){
+      .gsap-fade-up,.gsap-fade-in,.gsap-fade-left,.gsap-fade-right,.gsap-scale-up,
+      .hero-reveal,.hero-char,.hero-subtitle-word,.hero__badge,.hero__stat-item,
+      .trust-bar,.section-label,.service-card,.portfolio-card,.tech-badge,
+      .testimonial-card,.process__step,.contact__inner>*,.footer__inner>*,
+      .reveal{
+        opacity:1!important;transform:none!important;visibility:visible!important
+      }
+    }
   </style>
 
   <!-- ── Google Fonts — loaded non-blocking (media=print trick) ── -->
@@ -127,17 +152,17 @@
   </noscript>
 
   <!-- ── Main CSS — non-blocking progressive load ── -->
-  <link rel="stylesheet" href="css/style.css?v=51" media="print" onload="this.media='all'" />
-  <link rel="stylesheet" href="css/components.css?v=51" media="print" onload="this.media='all'" />
-  <link rel="stylesheet" href="css/animations.css?v=51" media="print" onload="this.media='all'" />
-  <link rel="stylesheet" href="css/responsive.css?v=51" media="print" onload="this.media='all'" />
-  <link rel="stylesheet" href="css/chatbot.css?v=51" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="css/style.css?v=52" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="css/components.css?v=52" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="css/animations.css?v=52" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="css/responsive.css?v=52" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="css/chatbot.css?v=52" media="print" onload="this.media='all'" />
   <!-- Fallback for no-JS browsers -->
   <noscript>
-    <link rel="stylesheet" href="css/style.css?v=51" />
-    <link rel="stylesheet" href="css/components.css?v=51" />
-    <link rel="stylesheet" href="css/animations.css?v=51" />
-    <link rel="stylesheet" href="css/responsive.css?v=51" />
+    <link rel="stylesheet" href="css/style.css?v=52" />
+    <link rel="stylesheet" href="css/components.css?v=52" />
+    <link rel="stylesheet" href="css/animations.css?v=52" />
+    <link rel="stylesheet" href="css/responsive.css?v=52" />
   </noscript>
 
   <!-- Include perf script for Service Worker & lazy-loading -->
@@ -1351,7 +1376,7 @@
   <script src="js/form.js" defer></script>
   <script src="js/chatbot.js?v=35" defer></script>
   <script src="js/feedback.js" defer></script>
-  <script src="js/main.js?v=51" defer></script>
+  <script src="js/main.js?v=52" defer></script>
   <script src="js/scroll-reveal.js" defer></script>
 </body>
 </html>

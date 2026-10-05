@@ -143,7 +143,18 @@ function initCounters() {
 
 // ── Section Scroll Reveals ──
 function initScrollReveal() {
-  if (shouldDisableMotion) return;
+  // On mobile: reveal all elements immediately — ScrollTrigger thresholds are
+  // calibrated for desktop viewports and may never fire on mobile, leaving
+  // content stuck at opacity:0.
+  if (isMobile || prefersReducedMotion) {
+    document.querySelectorAll(
+      '.gsap-fade-up,.gsap-fade-in,.gsap-fade-left,.gsap-fade-right,.gsap-scale-up,.trust-bar,.section-label'
+    ).forEach(el => {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    });
+    return;
+  }
 
   // Generic fade-up elements
   gsap.utils.toArray('.gsap-fade-up').forEach((el, i) => {
@@ -643,8 +654,9 @@ function initDoodles() {
 
 // ── Init All ──
 document.addEventListener('DOMContentLoaded', () => {
-  // Critical above-fold initializations
+  // Critical above-fold initializations — run immediately
   wrapSubtitleWords();
+  initHeroAnimation();   // FIX: was never called — hero elements stayed at opacity:0
   initSmoothScroll();
   initScrollReveal();
 
