@@ -2283,10 +2283,10 @@
    ============================================================ */
 
 .hero--editorial {
-  /* Scoped cream token — only active inside this section */
-  --hero-cream:      #FFF4EE;
-  --hero-navy:       #1A1035;  /* reuses --clr-bg value */
-  --hero-navy-60:    rgba(26, 16, 53, 0.6);
+  /* Use the site's existing dark background — matches --clr-bg */
+  --hero-cream:      #1A1035;
+  --hero-navy:       #FFFFFF;           /* text flips to white on dark bg */
+  --hero-navy-60:    rgba(200, 182, 212, 0.85); /* reuses --clr-text-muted family */
 
   position: relative;
   background: var(--hero-cream);
@@ -2373,7 +2373,7 @@
   font-family: var(--font-body);
   font-weight: 600;
   font-size: clamp(0.875rem, 1.5vw, 1rem);
-  border: 1.5px solid rgba(26, 16, 53, 0.35);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
   color: var(--hero-navy);
   background: transparent;
   text-decoration: none;
@@ -2413,18 +2413,18 @@
   line-height: 1;
 }
 
-/* Solid navy pill */
+/* Solid pill — white glass tint on dark bg */
 .hero__pill--solid {
-  background: var(--hero-navy);
+  background: rgba(255, 255, 255, 0.1);
   color: var(--clr-white);
-  border: 1.5px solid transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
 }
 
-/* White outline pill */
+/* Outline pill — transparent with white border for dark bg */
 .hero__pill--outline {
-  background: var(--clr-white);
-  color: var(--hero-navy);
-  border: 1.5px solid rgba(26, 16, 53, 0.18);
+  background: transparent;
+  color: var(--clr-white);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
 }
 
 /* ── Decorative blob — pure CSS, no image */
