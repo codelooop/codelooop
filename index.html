@@ -303,68 +303,59 @@
   <main>
 
     <!-- ══════════════════════════════════════════
-         HERO SECTION
+         HERO SECTION — Editorial Light
     ══════════════════════════════════════════ -->
-    <section id="home" class="hero" aria-labelledby="hero-heading">
+    <section id="home" class="hero hero--editorial" aria-labelledby="hero-heading">
 
-      <!-- Background elements -->
-      <img src="assets/images/blob.png" alt="" class="hero__bg-infinity" aria-hidden="true" />
-      <div class="hero__blob hero__blob--1" aria-hidden="true"></div>
-      <div class="hero__blob hero__blob--2" aria-hidden="true"></div>
+      <!-- Decorative CSS blob — aria-hidden, pointer-events none -->
+      <div class="hero__blob-deco" aria-hidden="true"></div>
 
       <div class="container">
-        <div class="hero__split">
+        <div class="hero__editorial-inner">
 
-          <!-- LEFT: Text content -->
-          <div class="hero__content hero-reveal-root">
+          <!-- Eyebrow -->
+          <p class="hero__eyebrow hero-reveal" aria-hidden="true">✦ Premium digital agency</p>
 
-            <!-- Headline with cycling word rotator -->
-            <h1 class="hero__title lang-rtl-text hero-reveal" id="hero-heading">
-              We build
-              <span class="hero__rotating-word-wrap">
-                <span class="hero__rotating-word" id="hero-rotating-word">fast</span>
-              </span>
-              digital experiences
-            </h1>
+          <!-- H1 headline -->
+          <h1 class="hero__title hero__title--editorial hero-reveal" id="hero-heading">
+            We build
+            <br class="hero__br--desktop" />
+            <span class="hero__highlight" data-i18n="hero.highlightWord">future-proof</span>
+            <br class="hero__br--desktop" />
+            digital experiences
+          </h1>
 
-            <!-- Subtitle -->
-            <p class="hero__subtitle lang-rtl-text hero-reveal" data-i18n="hero.subtitle">
-              Custom websites, Shopify stores, and CRMs engineered for businesses that refuse to blend in.
-            </p>
+          <!-- Subtitle — keeps existing i18n key -->
+          <p class="hero__subtitle hero__subtitle--editorial hero-reveal" data-i18n="hero.subtitle">
+            Custom websites, Shopify stores, and CRMs engineered for businesses that refuse to blend in.
+          </p>
 
-            <!-- CTAs -->
-            <div class="hero__cta-group hero-reveal">
-              <a href="#portfolio" class="btn btn-primary lang-rtl-text" id="hero-portfolio-btn">
-                <span data-i18n="hero.ctaPrimary">View Portfolio</span>
-                <svg class="btn-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <path d="M4 10h12M10 4l6 6-6 6"/>
-                </svg>
-              </a>
-              <a href="#contact" class="btn btn-ghost lang-rtl-text" id="hero-quote-btn">
-                <span data-i18n="hero.ctaSecondary">Get a Quote</span>
-              </a>
-            </div>
-
+          <!-- CTAs — keep existing IDs, hrefs, i18n keys, classes -->
+          <div class="hero__cta-group hero-reveal">
+            <a href="#portfolio" class="btn btn-primary lang-rtl-text" id="hero-portfolio-btn">
+              <span data-i18n="hero.ctaPrimary">View Portfolio</span>
+              <svg class="btn-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M4 10h12M10 4l6 6-6 6"/>
+              </svg>
+            </a>
+            <a href="#contact" class="btn hero__btn-secondary lang-rtl-text" id="hero-quote-btn">
+              <span data-i18n="hero.ctaSecondary">Get a Quote</span>
+            </a>
           </div>
 
-          <!-- RIGHT: Media placeholder -->
-          <!-- TODO: replace with real project screenshot/video -->
-          <div class="hero__media hero-reveal" aria-hidden="true">
-            <div class="hero__media-inner">
-              <div class="hero__media-glow"></div>
-              <div class="hero__media-grid">
-                <div class="hero__media-card hero__media-card--1"></div>
-                <div class="hero__media-card hero__media-card--2"></div>
-                <div class="hero__media-card hero__media-card--3"></div>
-                <div class="hero__media-card hero__media-card--4"></div>
-              </div>
-            </div>
-          </div>
+          <!-- Service pills row -->
+          <ul class="hero__pills hero-reveal" aria-label="Services we offer">
+            <li class="hero__pill hero__pill--solid">Websites</li>
+            <li class="hero__pill hero__pill--outline">Shopify</li>
+            <li class="hero__pill hero__pill--solid">WooCommerce</li>
+            <li class="hero__pill hero__pill--outline">Custom CRM</li>
+            <li class="hero__pill hero__pill--solid">SEO &amp; Speed</li>
+          </ul>
 
         </div>
       </div>
 
-      <!-- Scroll indicator -->
+      <!-- Scroll indicator — unchanged -->
       <a href="#trust" class="hero__scroll-indicator" aria-label="Scroll down">
         <span class="hero__scroll-line" aria-hidden="true"></span>
       </a>

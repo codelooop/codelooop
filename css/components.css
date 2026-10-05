@@ -2272,3 +2272,211 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+/* ============================================================
+   HERO — EDITORIAL LIGHT REDESIGN
+   Scoped entirely to .hero--editorial.
+   Tokens reused: --clr-bg (#1A1035), --clr-coral, --clr-pink,
+   --grad-primary, --font-heading, --font-body, --radius-full,
+   --radius-md, --sp-xl, --ease-out, --shadow-glow.
+   New scoped token: --hero-cream (light warm background).
+   ============================================================ */
+
+.hero--editorial {
+  /* Scoped cream token — only active inside this section */
+  --hero-cream:      #FFF4EE;
+  --hero-navy:       #1A1035;  /* reuses --clr-bg value */
+  --hero-navy-60:    rgba(26, 16, 53, 0.6);
+
+  position: relative;
+  background: var(--hero-cream);
+  overflow: hidden;
+  padding-top:    clamp(5rem, 10vw, 9rem);
+  padding-bottom: clamp(5rem, 10vw, 9rem);
+
+  /* Override the dark gradient the global .hero adds */
+  background-image: none;
+}
+
+/* ── Editorial inner layout — single left-aligned column */
+.hero__editorial-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 3vw, 2.25rem);
+  align-items: flex-start;
+}
+
+/* ── Eyebrow */
+.hero__eyebrow {
+  font-family: var(--font-body);
+  font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--clr-coral);
+}
+
+/* ── Headline */
+.hero__title--editorial {
+  font-family: var(--font-heading);
+  font-size: clamp(2.6rem, 8vw, 6.5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--hero-navy);
+  /* Override any white color set by the global .hero__title */
+  -webkit-text-fill-color: initial;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+}
+
+/* Desktop line-break helper: hidden on mobile */
+.hero__br--desktop { display: block; }
+@media (max-width: 600px) { .hero__br--desktop { display: none; } }
+
+/* ── Gradient highlight badge on "future-proof" */
+.hero__highlight {
+  display: inline-block;
+  background: var(--grad-primary);
+  color: var(--clr-white);
+  -webkit-text-fill-color: var(--clr-white);
+  padding: 0.05em 0.35em 0.1em;
+  border-radius: var(--radius-md);
+  /* Subtle vertical offset so it sits like a stamp */
+  position: relative;
+  top: -0.04em;
+}
+
+/* ── Subtitle */
+.hero__subtitle--editorial {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.65;
+  color: var(--hero-navy-60);
+  max-width: 540px;
+  /* Override any white color set globally */
+  -webkit-text-fill-color: initial;
+}
+
+/* ── CTA group — inherits global .hero__cta-group flex layout */
+/* Secondary ghost button scoped to hero-editorial */
+.hero__btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.75rem;
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  border: 1.5px solid rgba(26, 16, 53, 0.35);
+  color: var(--hero-navy);
+  background: transparent;
+  text-decoration: none;
+  transition: border-color var(--dur-base) var(--ease-out),
+              background var(--dur-base) var(--ease-out),
+              color var(--dur-base) var(--ease-out);
+  cursor: pointer;
+}
+.hero__btn-secondary:hover,
+.hero__btn-secondary:focus-visible {
+  border-color: var(--clr-coral);
+  background: rgba(255, 122, 89, 0.06);
+  color: var(--clr-coral);
+  outline: 2px solid var(--clr-coral);
+  outline-offset: 3px;
+}
+
+/* ── Service pills */
+.hero__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.hero__pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 1.1rem;
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-size: clamp(0.75rem, 1.3vw, 0.875rem);
+  font-weight: 600;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+/* Solid navy pill */
+.hero__pill--solid {
+  background: var(--hero-navy);
+  color: var(--clr-white);
+  border: 1.5px solid transparent;
+}
+
+/* White outline pill */
+.hero__pill--outline {
+  background: var(--clr-white);
+  color: var(--hero-navy);
+  border: 1.5px solid rgba(26, 16, 53, 0.18);
+}
+
+/* ── Decorative blob — pure CSS, no image */
+.hero__blob-deco {
+  position: absolute;
+  top: -10%;
+  right: -18%;
+  width: clamp(380px, 55vw, 820px);
+  aspect-ratio: 1;
+  background: var(--grad-primary);
+  opacity: 0.13;
+  border-radius: 40% 60% 55% 45% / 50% 40% 60% 50%;
+  pointer-events: none;
+  z-index: 1;
+  animation: blobFloat 12s ease-in-out infinite alternate;
+  will-change: border-radius, transform;
+}
+
+@keyframes blobFloat {
+  0%   { border-radius: 40% 60% 55% 45% / 50% 40% 60% 50%; transform: translate(0, 0) scale(1); }
+  50%  { border-radius: 55% 45% 40% 60% / 40% 55% 45% 60%; transform: translate(-2%, 3%) scale(1.03); }
+  100% { border-radius: 45% 55% 60% 40% / 60% 45% 55% 40%; transform: translate(2%, -2%) scale(0.97); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__blob-deco { animation: none; }
+}
+
+/* On tablet/mobile, shrink blob and push it further right so it never overlaps subtext */
+@media (max-width: 900px) {
+  .hero__blob-deco {
+    width: clamp(240px, 70vw, 480px);
+    top: auto;
+    bottom: -15%;
+    right: -20%;
+    opacity: 0.09;
+  }
+}
+
+/* ── Responsive: stack CTA buttons on narrow screens */
+@media (max-width: 480px) {
+  .hero--editorial .hero__cta-group {
+    flex-direction: column;
+    width: 100%;
+  }
+  .hero--editorial .hero__cta-group .btn,
+  .hero--editorial .hero__cta-group .hero__btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+  .hero__pills {
+    gap: 0.5rem;
+  }
+}
+
