@@ -2362,7 +2362,7 @@
   bottom: 0;
   width: 0%;
   background: var(--grad-primary);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-full);
   z-index: -1;
   transition: width 0.8s cubic-bezier(0.2, 1, 0.2, 1);
 }
