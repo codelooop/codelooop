@@ -279,13 +279,16 @@
 .hero__rotating-word-wrap {
   display: inline-block;
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden was here and clipped the pill's rounded top/bottom corners.
+     Removed — word slide is now clipped via opacity+transform alone. */
+  overflow: visible;
   vertical-align: bottom;
   min-width: 2em;
 }
 
 .hero__rotating-word {
   display: inline-block;
+  /* background-clip:text is overridden by .hero__highlight in components.css */
   background: var(--grad-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
